@@ -1,10 +1,31 @@
+import { useState } from "react";
 import { CartContext } from "./cart.context";
-import { ICartProvider } from "./cart.types";
+import { ICartProvider, ProductCart } from "./cart.types";
 
 export function CartProvider({ children }: ICartProvider) {
-  async function addProduct() {}
-  async function removeProduct() {}
-  async function updateAmountProduct() {}
+  const [cart, setCart] = useState<Array<ProductCart>>([]);
+
+  function addProduct(item: ProductCart) {
+    setCart((oldCart) => [...oldCart, item]);
+
+    return cart;
+  }
+  function removeProduct(item: ProductCart) {
+    const cartRemovedItem = cart.filter((product) => product.id !== item.id);
+
+    setCart(cartRemovedItem);
+
+    return cart;
+  }
+  function updateAmountProduct(item: ProductCart) {
+    const cartUpdated = cart.map((product) =>
+      product.id === item.id ? { ...product, amount: item.amount } : product
+    );
+
+    setCart(cartUpdated);
+
+    return cart;
+  }
 
   return (
     <CartContext.Provider

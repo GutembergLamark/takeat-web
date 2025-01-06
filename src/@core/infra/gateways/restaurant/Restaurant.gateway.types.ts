@@ -1,4 +1,4 @@
-export default interface RestaurantGateway {
+export interface RestaurantGateway {
   createRestaurant(): Promise<unknown>;
 
   createProduct(): Promise<unknown>;
@@ -9,5 +9,10 @@ export default interface RestaurantGateway {
 
   listOrders(): Promise<unknown>;
 
-  session(): Promise<unknown>;
+  session(credentials: Credentials): Promise<unknown>;
+}
+
+export interface Credentials {
+  email: string;
+  password: string;
 }
