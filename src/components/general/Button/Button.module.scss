@@ -1,0 +1,15 @@
+@use "@/assets/sass/abstracts/typography" as *;
+@use "@/assets/sass/abstracts/variables" as *;
+
+.button {
+  @include Poppins1-4rem($weight: 500);
+  background-color: $white;
+  color: $black;
+  border-radius: 0.8rem;
+  padding: 1.2rem;
+
+  &[data-color="red"] {
+    background-color: $red;
+    color: $white;
+  }
+}

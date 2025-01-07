@@ -1,0 +1,34 @@
+@use "@/assets/sass/abstracts/typography" as *;
+@use "@/assets/sass/abstracts/variables" as *;
+
+.field {
+  border: none;
+  position: relative;
+  width: 100%;
+
+  & label {
+    @include Poppins1-6rem;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  & input {
+    border: 1px solid $black-opacity-1;
+    padding: 1rem;
+    padding-right: 3rem;
+    border-radius: 0.8rem;
+    height: 4rem;
+    width: 100%;
+
+    &,
+    &::placeholder {
+      @include Poppins1-4rem;
+    }
+  }
+
+  &__eye {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1rem;
+  }
+}

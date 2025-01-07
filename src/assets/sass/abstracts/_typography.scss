@@ -1,0 +1,27 @@
+@mixin Poppins1-6rem(
+  $height: initial,
+  $weight: 400,
+  $align: left,
+  $spacing: initial
+) {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(1.4rem, 1.6cqi, 1.6rem);
+  line-height: $height;
+  font-weight: $weight;
+  text-align: $align;
+  letter-spacing: $spacing;
+}
+
+@mixin Poppins1-4rem(
+  $height: initial,
+  $weight: 400,
+  $align: left,
+  $spacing: initial
+) {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(1.2rem, 1.4cqi, 1.4rem);
+  line-height: $height;
+  font-weight: $weight;
+  text-align: $align;
+  letter-spacing: $spacing;
+}

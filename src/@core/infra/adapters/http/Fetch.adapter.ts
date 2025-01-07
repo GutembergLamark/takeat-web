@@ -1,6 +1,6 @@
-import HttpClient from "./Http.types";
+import IHttpClient from "./Http.types";
 
-export default class FetchAdapter implements HttpClient {
+export default class FetchAdapter implements IHttpClient {
   async get(url: string): Promise<unknown> {
     const response = await fetch(url, {
       method: "GET",

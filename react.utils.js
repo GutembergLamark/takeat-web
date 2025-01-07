@@ -2,6 +2,64 @@ import * as fs from 'node:fs';
 import * as path from 'node:path'
 
 const templateFunctions = {
+  module: function () {
+    let modulePage = process.argv[3]
+    let moduleName = process.argv[4]
+    let moduleMainFolder = findFolder('./src', 'modules')
+    let moduleMainPage = `./${moduleMainFolder}/${modulePage}`
+    let moduleFolder = `./${moduleMainFolder}/${modulePage}/${moduleName}`
+    let moduleTemplate = fs.readFileSync(
+      './src/templates/react.utils.module.tsx',
+      'utf-8'
+    )
+    moduleTemplate = moduleTemplate.replace('// @ts-nocheck', '')
+    moduleTemplate = moduleTemplate.replace('/* eslint-disable @typescript-eslint/ban-ts-comment */', '')
+
+    if (!modulePage) {
+      console.error(
+        new Error('Você não especificou uma página para o seu módulo.')
+      )
+      return
+    }
+    if (!moduleName) {
+      console.error(
+        new Error('Você não especificou um nome para seu módulo.')
+      )
+      return
+    }
+
+    moduleTemplate = moduleTemplate
+      .replaceAll('__MODULENAME__', moduleName)
+      .trim()
+    fs.mkdirSync(moduleMainPage)
+    fs.mkdirSync(moduleFolder)
+    fs.writeFileSync(`${moduleMainPage}/index.ts`, '//<TAKEAT-BACK-AUTO-IMPORT>//')
+    fs.writeFileSync(`${moduleFolder}/${moduleName}.scss`, '')
+    console.log(
+      `-- "${moduleFolder}/${moduleName}.scss" criado com sucesso.`
+    )
+    fs.writeFileSync(`${moduleFolder}/${moduleName}.interfaces.ts`, 'export interface Fields{}')
+    console.log(
+      `-- "${moduleFolder}/${moduleName}.interfaces.ts" criado com sucesso.`
+    )
+    fs.writeFileSync(`${moduleFolder}/${moduleName}.tsx`, moduleTemplate)
+    console.log(
+      `-- "${moduleFolder}/${moduleName}.tsx" criado com sucesso.`
+    )
+
+    // Import caring
+    let importFile = fs.readFileSync(
+      `${moduleMainPage}/index.ts`,
+      'utf-8'
+    )
+    importFile = importFile.replace(
+      /\/\/<TAKEAT-BACK-AUTO-IMPORT>\/\//g,
+      `export { ${moduleName} } from './${moduleName}/${moduleName}'\n//<TAKEAT-BACK-AUTO-IMPORT>//`
+    )
+    fs.writeFileSync(`${moduleMainPage}/index.ts`, importFile)
+    console.log('-- Importação automática realizada.')
+  },
+
   component: {
     general: function () {
       createComponent('general')
@@ -24,7 +82,8 @@ let templateType = templateFunctions[type]
 if (templateType == templateFunctions.component) {
   let componentTemplate = templateFunctions[process.argv[2]?.replace('--', '')][process.argv[3]?.replace('--', '')]
   componentTemplate()
-} else console.error(new Error('Template inválido.'))
+} else if (type !== 'component') templateType()
+else console.error(new Error('Template inválido.'))
 
 // General Functions
 function findFolder(rootFolder = './src', folderName, type = undefined) {
@@ -51,7 +110,7 @@ function findFolder(rootFolder = './src', folderName, type = undefined) {
 
           if (!found) {
             fs.mkdirSync(componentFolder)
-            fs.writeFileSync(`${componentFolder}/index.ts`, "//<NEXTPRESS-BACK-AUTO-IMPORT>//")
+            fs.writeFileSync(`${componentFolder}/index.ts`, "//<TAKEAT-BACK-AUTO-IMPORT>//")
             return findFolder(folder, folderName) ?? null
           }
         }

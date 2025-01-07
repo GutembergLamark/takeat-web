@@ -4,17 +4,18 @@ import { Input } from "@/components/formsInputs";
 import useFormLoginModel from "./FormLogin.model";
 import { handleChange } from "@/utils/functions";
 import { Credentials } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
+import { Button } from "@/components/general";
 
 export function FormLogin() {
-  const { setValues, onSubmit } = useFormLoginModel();
+  const { setValues, onSubmit, errors } = useFormLoginModel();
 
   return (
     <Form
       className={style.form}
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
 
-        onSubmit();
+        await onSubmit();
       }}
     >
       <Input
@@ -25,6 +26,7 @@ export function FormLogin() {
           onChange: (e) => handleChange<Credentials>(e, setValues),
         }}
         label="Email:"
+        error={errors?.email}
       />
       <Input
         attributes={{
@@ -34,8 +36,17 @@ export function FormLogin() {
           onChange: (e) => handleChange<Credentials>(e, setValues),
         }}
         label="Senha:"
+        error={errors?.password}
       />
-      <button type="submit">Cadastrar</button>
+      <Button
+        type="button"
+        styleType="default"
+        label="Entrar"
+        buttonProps={{ type: "submit" }}
+        color="red"
+      >
+        Entrar
+      </Button>
     </Form>
   );
 }

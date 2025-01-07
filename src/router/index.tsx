@@ -1,9 +1,5 @@
+import { Cart, Error, Home, Login, Register, Restaurant } from "@/pages";
 import { createBrowserRouter } from "react-router-dom";
-import Home from "@/pages/Home";
-import Cart from "@/pages/Cart";
-import Restaurant from "@/pages/Restaurant";
-import Error from "@/pages/Error";
-import Login from "@/pages/Login";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home />, errorElement: <Error /> },
@@ -21,6 +17,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
     errorElement: <Error />,
   },
 ]);

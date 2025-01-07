@@ -1,5 +1,5 @@
 export interface RestaurantGateway {
-  createRestaurant(): Promise<unknown>;
+  createRestaurant(data: DataCreateRestaurant): Promise<unknown>;
 
   createProduct(): Promise<unknown>;
 
@@ -15,4 +15,14 @@ export interface RestaurantGateway {
 export interface Credentials {
   email: string;
   password: string;
+}
+
+export interface DataCreateRestaurant {
+  username: string;
+  phone: string;
+  email: string;
+  password: string;
+  confirm?: string;
+  address: string;
+  has_service_tax: boolean | string;
 }

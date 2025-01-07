@@ -5,12 +5,22 @@ import { useState } from "react";
 
 export default function useFormLoginModel() {
   const [values, setValues] = useState<Credentials>({} as Credentials);
+  const [errors, setErrors] = useState<Partial<Credentials>>(
+    {} as Partial<Credentials>
+  );
+
   const createSession = new CreateSession(restaurantGateway);
 
-  function onSubmit() {
-    createSession.execute(values);
-    console.log(values);
+  async function onSubmit() {
+    const data = await createSession.execute(values);
+
+    if (data?.errors) {
+      return setErrors(data?.errors);
+    }
+
+    setErrors({});
+    return data;
   }
 
-  return { values, setValues, onSubmit };
+  return { setValues, onSubmit, errors };
 }
