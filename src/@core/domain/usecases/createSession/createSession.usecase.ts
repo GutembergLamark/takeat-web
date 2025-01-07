@@ -5,7 +5,7 @@ import {
 } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
 import { ICreateSession } from "./createSession.usecase.types";
 import { DataValidator } from "@/@core/infra/adapters/validator";
-import { createSessionSchema } from "@/utils/schemas/createSession.schema";
+import { createSessionSchema } from "@/utils/schemas";
 
 export default class CreateSession implements ICreateSession {
   constructor(readonly restaurantGateway: RestaurantGateway) {}

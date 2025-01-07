@@ -1,5 +1,14 @@
-import { Cart, Error, Home, Login, Register, Restaurant } from "@/pages";
+import {
+  Cart,
+  Error,
+  Home,
+  Login,
+  Register,
+  Restaurant,
+  RestaurantDashboard,
+} from "@/pages";
 import { createBrowserRouter } from "react-router-dom";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home />, errorElement: <Error /> },
@@ -10,9 +19,15 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/restaurant/:restaurantId/dashboard",
-    element: <Restaurant />,
+    element: <ProtectedRoutes />,
     errorElement: <Error />,
+    children: [
+      {
+        path: "/restaurant/:restaurantId/dashboard",
+        element: <RestaurantDashboard />,
+        errorElement: <Error />,
+      },
+    ],
   },
   {
     path: "/login",

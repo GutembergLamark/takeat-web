@@ -1,0 +1,58 @@
+@use "@/assets/sass/abstracts/variables" as *;
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #00000042;
+  border: none;
+
+  &__wrapper {
+    background-color: $white;
+    position: relative;
+    border-radius: 2rem;
+    border: 2px solid $red;
+    display: flex;
+    overflow: hidden;
+    overflow: auto;
+    max-height: 100%;
+    max-width: 80rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & > button {
+      position: absolute;
+      right: 3.2rem;
+      top: 3.2rem;
+      font-size: 3rem;
+      background-color: $red;
+      color: $white;
+      width: clamp(3.2rem, 3.7vw, 3.7rem);
+      height: clamp(3.2rem, 3.7vw, 3.7rem);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid $white;
+    }
+
+    & > div {
+      display: flex;
+      flex-flow: column;
+      padding: 4.8rem 3.2rem;
+      height: max-content;
+    }
+  }
+}

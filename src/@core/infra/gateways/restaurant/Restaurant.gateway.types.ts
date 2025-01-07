@@ -1,7 +1,10 @@
 export interface RestaurantGateway {
   createRestaurant(data: DataCreateRestaurant): Promise<unknown>;
 
-  createProduct(): Promise<unknown>;
+  createProduct(
+    data: DataCreateProduct,
+    authorization: string
+  ): Promise<unknown>;
 
   createOrder(): Promise<unknown>;
 
@@ -25,4 +28,10 @@ export interface DataCreateRestaurant {
   confirm?: string;
   address: string;
   has_service_tax: boolean | string;
+}
+
+export interface DataCreateProduct {
+  name: string;
+  description: string;
+  value: number;
 }

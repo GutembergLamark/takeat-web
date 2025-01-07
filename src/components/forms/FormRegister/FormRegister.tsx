@@ -4,6 +4,7 @@ import { Input } from "@/components/formsInputs";
 import { handleChange } from "@/utils/functions";
 import useFormRegisterModel from "./FormRegister.model";
 import { Button } from "@/components/general";
+import { DataCreateRestaurant } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
 
 export function FormRegister() {
   const { setValues, onSubmit, errors } = useFormRegisterModel();
@@ -22,7 +23,7 @@ export function FormRegister() {
           type: "text",
           placeholder: "Digite o nome do restaurante",
           id: "username",
-          onChange: (e) => handleChange(e, setValues),
+          onChange: (e) => handleChange<DataCreateRestaurant>(e, setValues),
         }}
         label="Nome:"
         error={errors?.username}
@@ -32,7 +33,8 @@ export function FormRegister() {
           type: "text",
           placeholder: "Digite o telefone",
           id: "phone",
-          onAccept: (value) => handleChange(null, setValues, "phone", value),
+          onAccept: (value) =>
+            handleChange<DataCreateRestaurant>(null, setValues, "phone", value),
         }}
         label="Telefone:"
         mask={"+55 (00) 00000-0000"}
@@ -43,7 +45,7 @@ export function FormRegister() {
           type: "email",
           placeholder: "Digite o email",
           id: "email",
-          onChange: (e) => handleChange(e, setValues),
+          onChange: (e) => handleChange<DataCreateRestaurant>(e, setValues),
         }}
         label="Email:"
         error={errors?.email}
@@ -53,7 +55,7 @@ export function FormRegister() {
           type: "password",
           placeholder: "Digite a senha",
           id: "password",
-          onChange: (e) => handleChange(e, setValues),
+          onChange: (e) => handleChange<DataCreateRestaurant>(e, setValues),
         }}
         label="Senha:"
         error={errors?.password}
@@ -63,7 +65,7 @@ export function FormRegister() {
           type: "password",
           placeholder: "Confirme a senha",
           id: "confirm",
-          onChange: (e) => handleChange(e, setValues),
+          onChange: (e) => handleChange<DataCreateRestaurant>(e, setValues),
         }}
         label="Confirmação de Senha:"
         error={errors?.confirm}
@@ -73,7 +75,7 @@ export function FormRegister() {
           type: "text",
           placeholder: "Digite o endereço",
           id: "address",
-          onChange: (e) => handleChange(e, setValues),
+          onChange: (e) => handleChange<DataCreateRestaurant>(e, setValues),
         }}
         label="Endereço:"
         error={errors?.address}
@@ -82,7 +84,7 @@ export function FormRegister() {
         attributes={{
           type: "checkbox",
           id: "has_service_tax",
-          onChange: (e) => handleChange(e, setValues),
+          onChange: (e) => handleChange<DataCreateRestaurant>(e, setValues),
         }}
         label="Taxa de serviço:"
       />

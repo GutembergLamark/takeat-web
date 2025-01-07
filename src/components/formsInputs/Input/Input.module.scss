@@ -31,4 +31,12 @@
     bottom: 1.5rem;
     right: 1rem;
   }
+
+  &__error {
+    @include Poppins1-2rem;
+    position: absolute;
+    top: calc(100%);
+    left: 0;
+    color: $red;
+  }
 }
