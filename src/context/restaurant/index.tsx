@@ -15,7 +15,7 @@ import { removeCookie } from "@/utils/functions";
 
 export function RestaurantProvider({ children }: IRestaurantProvider) {
   const [restaurant, setRestaurant] = useState<Partial<IRestaurant> | null>(
-    {} as IRestaurant | null
+    null as IRestaurant | null
   );
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -32,10 +32,10 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
   const createRetaurant = new CreateRestaurant(restaurantGateway);
 
   useLayoutEffect(() => {
-    loadUser(restaurant);
+    loadRestaurant(restaurant);
   }, [restaurant]);
 
-  function loadUser(restaurant: Partial<IRestaurant> | null) {
+  function loadRestaurant(restaurant: Partial<IRestaurant> | null) {
     const localRestaurant = localStorage.getItem("takeat_restaurant");
     const parsedRestaurant = localRestaurant
       ? JSON.parse(localRestaurant)

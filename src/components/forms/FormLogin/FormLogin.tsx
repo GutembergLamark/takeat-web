@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import style from "./FormLogin.module.scss";
 import { Input } from "@/components/formsInputs";
 import useFormLoginModel from "./FormLogin.model";
@@ -47,6 +47,10 @@ export function FormLogin() {
       >
         Entrar
       </Button>
+
+      <p>
+        Criar uma conta <Link to="/register">Inscrever-se</Link>
+      </p>
     </Form>
   );
 }

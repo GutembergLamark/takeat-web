@@ -1,3 +1,12 @@
+import { ListCart } from "@/sections/modules/Cart";
+import { MotionMain } from "@/utils/libs/motion";
+
 export function Cart() {
-  return <div>Cart</div>;
+  const uri = "/cart";
+
+  return (
+    <MotionMain>
+      <ListCart fields={{ title: "Carrinho" }} uri={uri} order={1} />
+    </MotionMain>
+  );
 }

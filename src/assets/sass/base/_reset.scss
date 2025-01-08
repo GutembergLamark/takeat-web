@@ -28,6 +28,7 @@ main {
 img {
   max-width: 100%;
   height: auto;
+  vertical-align: bottom;
 }
 button {
   background-color: transparent;
@@ -64,7 +65,7 @@ a {
 .wrapper {
   margin: 0 auto;
   width: 90%;
-  max-width: 1000px;
+  max-width: 600px;
 }
 ::-webkit-scrollbar {
   width: 4px;

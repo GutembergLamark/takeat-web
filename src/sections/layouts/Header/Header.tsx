@@ -1,11 +1,15 @@
 import logo from "@/assets/svg/logo-takeat.svg";
+import cart from "@/assets/svg/cart.svg";
 import { Link } from "react-router-dom";
-import "./Header.scss";
 import { useContext } from "react";
 import { RestaurantContext } from "@/context/restaurant/restaurant.context";
+import { Button } from "@/components/general";
+import "./Header.scss";
+import { CartContext } from "@/context/cart/cart.context";
 
 export function Header() {
   const { restaurant, logout } = useContext(RestaurantContext);
+  const { cartProducts } = useContext(CartContext);
 
   return (
     <header className="header">
@@ -15,6 +19,12 @@ export function Header() {
             <img src={logo} alt="Logo" />
           </Link>
         </h1>
+        <div className="header__cart">
+          <Link to="/cart">
+            <img src={cart} alt="Carrinho" />
+          </Link>
+          {!!cartProducts?.length && <span>{cartProducts?.length}</span>}
+        </div>
         <p className="header__name">
           {restaurant?.username ? (
             <>
@@ -29,7 +39,14 @@ export function Header() {
               </span>
             </>
           ) : (
-            <Link to={`/login`}>Login</Link>
+            <Button
+              type="link"
+              styleType="default"
+              linkProps={{ to: `/login` }}
+              color="red"
+            >
+              Login
+            </Button>
           )}
         </p>
       </section>

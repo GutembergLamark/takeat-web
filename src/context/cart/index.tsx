@@ -1,35 +1,82 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { CartContext } from "./cart.context";
 import { ICartProvider, ProductCart } from "./cart.types";
 
 export function CartProvider({ children }: ICartProvider) {
-  const [cart, setCart] = useState<Array<ProductCart>>([]);
+  const [cartProducts, setCartProducts] = useState<Array<ProductCart>>([]);
+
+  useLayoutEffect(() => {
+    loadCart(cartProducts);
+  }, [cartProducts]);
+
+  function loadCart(cartProducts: Array<ProductCart>) {
+    const localCart = localStorage.getItem("takeat_cart");
+    const parsedCart = localCart ? JSON.parse(localCart) : null;
+
+    const hasCartInLocalStorage = localCart && parsedCart?.length;
+
+    if (cartProducts.length && !hasCartInLocalStorage) {
+      localStorageSet(cartProducts);
+    }
+
+    if (hasCartInLocalStorage && !cartProducts?.length) {
+      setCartProducts(parsedCart);
+    }
+  }
+
+  function localStorageSet(products: Array<ProductCart>) {
+    try {
+      localStorage.setItem("takeat_cart", JSON.stringify(products));
+    } catch (error) {
+      console.error("Erro ao salvar no localStorage", error);
+    }
+  }
 
   function addProduct(item: ProductCart) {
-    setCart((oldCart) => [...oldCart, item]);
+    if (cartProducts.length === 0) {
+      setCartProducts((oldCart) => [...oldCart, item]);
 
-    return cart;
+      localStorageSet([...cartProducts, item]);
+    }
+
+    return cartProducts;
   }
+
   function removeProduct(item: ProductCart) {
-    const cartRemovedItem = cart.filter((product) => product.id !== item.id);
+    const cartRemovedItem = cartProducts.filter(
+      (product) => product.id !== item.id
+    );
 
-    setCart(cartRemovedItem);
+    setCartProducts(cartRemovedItem);
+    localStorageSet(cartRemovedItem);
 
-    return cart;
+    return cartProducts;
   }
+
   function updateAmountProduct(item: ProductCart) {
-    const cartUpdated = cart.map((product) =>
+    const cartUpdated = cartProducts.map((product) =>
       product.id === item.id ? { ...product, amount: item.amount } : product
     );
 
-    setCart(cartUpdated);
+    setCartProducts(cartUpdated);
+    localStorageSet(cartUpdated);
 
-    return cart;
+    return cartProducts;
+  }
+
+  async function buyCart() {
+    return;
   }
 
   return (
     <CartContext.Provider
-      value={{ addProduct, removeProduct, updateAmountProduct }}
+      value={{
+        addProduct,
+        removeProduct,
+        updateAmountProduct,
+        buyCart,
+        cartProducts,
+      }}
     >
       {children}
     </CartContext.Provider>

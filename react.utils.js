@@ -38,7 +38,7 @@ const templateFunctions = {
     console.log(
       `-- "${moduleFolder}/${moduleName}.scss" criado com sucesso.`
     )
-    fs.writeFileSync(`${moduleFolder}/${moduleName}.interfaces.ts`, 'export interface Fields{}')
+    fs.writeFileSync(`${moduleFolder}/${moduleName}.types.ts`, 'export interface Fields{}')
     console.log(
       `-- "${moduleFolder}/${moduleName}.interfaces.ts" criado com sucesso.`
     )

@@ -6,7 +6,7 @@ export default function useFormRegisterModel() {
   const [values, setValues] = useState<DataCreateRestaurant>(
     {} as DataCreateRestaurant
   );
-  const { register, errorsLogin: errors } = useContext(RestaurantContext);
+  const { register, errorsRegister: errors } = useContext(RestaurantContext);
 
   async function onSubmit() {
     await register(values);

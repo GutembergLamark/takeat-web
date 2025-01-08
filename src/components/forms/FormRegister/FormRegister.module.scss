@@ -1,5 +1,8 @@
+@use "@/assets/sass/abstracts/variables" as *;
+@use "@/assets/sass/abstracts/typography" as *;
+
 .form {
-  max-width: 60rem;
+  max-width: 50rem;
   width: 100%;
   margin: 0 auto;
 
@@ -25,5 +28,14 @@
 
   & button {
     width: 100%;
+  }
+
+  & p {
+    @include Poppins1-4rem;
+    margin-top: clamp(1.4cqi, 1.6cqi, 1.6rem);
+
+    & a {
+      color: $red;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import style from "./FormRegister.module.scss";
 import { Input } from "@/components/formsInputs";
 import { handleChange } from "@/utils/functions";
@@ -96,6 +96,10 @@ export function FormRegister() {
       >
         Cadastrar
       </Button>
+
+      <p>
+        Eu já tenho uma conta <Link to="/login">Entrar</Link>
+      </p>
     </Form>
   );
 }

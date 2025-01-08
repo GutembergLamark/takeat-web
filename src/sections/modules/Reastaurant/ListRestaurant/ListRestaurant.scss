@@ -1,9 +1,13 @@
-.cl-products {
+@use "@/assets/sass/abstracts/variables" as *;
+@use "@/assets/sass/abstracts/typography" as *;
+
+.l-restaurant {
   container-type: inline-size;
   padding: clamp(7rem, 9cqi, 9rem) 0;
 
-  & > button {
-    margin: 0 auto;
+  & h2 {
+    @include Poppins2-2rem;
+    color: $black-1;
   }
 
   &__products {

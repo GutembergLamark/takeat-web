@@ -38,18 +38,14 @@ export default function ActionForOpenModal({ id }: ActionForOpenModalProps) {
 
       setProducts(formatedProducts.map((product: Product) => product.toJSON()));
     })();
-  }, []);
-
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
+  }, [modalRef?.current?.closeModal]);
 
   return (
     <>
-      <picture>
-        <img src={emptyProducts} alt="Sem Produtos" />
-      </picture>
-      <p>Seu restaurante ainda não tem produtos cadastrados</p>
+      <DefaultModal ref={modalRef}>
+        <FormCreateProduct closeModal={modalRef?.current?.closeModal!} />
+      </DefaultModal>
+
       <Button
         type="button"
         styleType="default"
@@ -57,26 +53,33 @@ export default function ActionForOpenModal({ id }: ActionForOpenModalProps) {
           type: "button",
           onClick: () => modalRef?.current?.showModal(),
         }}
+        color="red"
       >
         Cadastrar novo produto
       </Button>
 
-      <DefaultModal ref={modalRef}>
-        <FormCreateProduct closeModal={modalRef?.current?.closeModal!} />
-      </DefaultModal>
-
       <div className="cl-products__products">
-        {products?.map((product) => {
-          return (
-            <Card
-              key={`product-item-${product.id}`}
-              id={product?.id}
-              name={product?.name}
-              description={product?.description}
-              value={product?.value}
-            />
-          );
-        })}
+        {products?.length ?? 0 > 0 ? (
+          products?.map((product) => {
+            return (
+              <Card
+                key={`product-item-${product.id}`}
+                id={product?.id}
+                name={product?.name}
+                description={product?.description}
+                value={product?.value}
+                noAddCart
+              />
+            );
+          })
+        ) : (
+          <>
+            <picture>
+              <img src={emptyProducts} alt="Sem Produtos" />
+            </picture>
+            <p>Seu restaurante ainda não tem produtos cadastrados</p>
+          </>
+        )}
       </div>
     </>
   );
