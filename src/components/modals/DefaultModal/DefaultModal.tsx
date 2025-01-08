@@ -48,7 +48,7 @@ export const DefaultModal = forwardRef<DefaultModalRef, DefaultModalProps>(
                 aria-label="Close modal"
                 onClick={() => closeModal()}
               >
-                &times;
+                <span>&times;</span>
               </MotionButton>
 
               <MotionDiv>{children}</MotionDiv>

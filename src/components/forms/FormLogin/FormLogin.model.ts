@@ -1,25 +1,13 @@
-import CreateSession from "@/@core/domain/usecases/createSession/createSession.usecase";
 import { Credentials } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
-import { restaurantGateway } from "@/@core/infra/gateways/restaurant/RestaurantHttp.gateway";
-import { useState } from "react";
+import { RestaurantContext } from "@/context/restaurant/restaurant.context";
+import { useContext, useState } from "react";
 
 export default function useFormLoginModel() {
   const [values, setValues] = useState<Credentials>({} as Credentials);
-  const [errors, setErrors] = useState<Partial<Credentials>>(
-    {} as Partial<Credentials>
-  );
-
-  const createSession = new CreateSession(restaurantGateway);
+  const { login, errorsLogin: errors } = useContext(RestaurantContext);
 
   async function onSubmit() {
-    const data = await createSession.execute(values);
-
-    if (data?.errors) {
-      return setErrors(data?.errors);
-    }
-
-    setErrors({});
-    return data;
+    await login(values);
   }
 
   return { setValues, onSubmit, errors };

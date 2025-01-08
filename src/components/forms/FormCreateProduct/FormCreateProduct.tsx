@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Form } from "react-router-dom";
 import useFormCreateProductModel from "./FormCreateProduct.model";
 import style from "./FormCreateProduct.module.scss";
@@ -6,15 +5,20 @@ import { Input } from "@/components/formsInputs";
 import { Button } from "@/components/general";
 import { handleChange } from "@/utils/functions";
 import { DataCreateProduct } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
+import { FormCreateProductProps } from "./FormCreateProduct.types";
 
-export function FormCreateProduct() {
-  const { setValues, onSubmit, errors } = useFormCreateProductModel();
+export function FormCreateProduct({ closeModal }: FormCreateProductProps) {
+  const { setValues, onSubmit, errors } = useFormCreateProductModel({
+    closeModal,
+  });
 
   return (
     <Form
       className={style.form}
       onSubmit={async (e) => {
         e.preventDefault();
+
+        console.log(closeModal);
 
         await onSubmit();
       }}

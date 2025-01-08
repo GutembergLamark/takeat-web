@@ -14,11 +14,11 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 export function handleChange<T>(
   e: ChangeEvent<HTMLInputElement> | any,
   setValues: Dispatch<SetStateAction<T>>,
-  name?: string,
-  value?: string
+  name: string = "",
+  value: string = ""
 ): void {
-  const eventName = !name ? e.target.id : name;
-  const eventValue = !value ? e.target.value : value;
+  const eventName = !name ? e.target.id ?? "" : name;
+  const eventValue = !value ? e.target.value ?? "" : value;
 
   return setValues((oldValues: T) => {
     return { ...oldValues, [eventName]: eventValue };
@@ -63,7 +63,18 @@ export function setCookie(name: string, value: string, days: number): void {
     expires = "; expires=" + date.toUTCString();
   }
   document.cookie = `${name}=${value || ""}${expires}; path=/`;
-  console.log(`${name}=${value || ""}${expires}; path=/`);
 
+  return;
+}
+
+/**
+ * Remove Cookie
+ *
+ * @param {string} name
+ * @return {void}
+ */
+export function removeCookie(name: string): void {
+  if (!document) return;
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
   return;
 }

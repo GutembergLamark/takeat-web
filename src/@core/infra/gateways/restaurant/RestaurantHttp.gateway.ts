@@ -18,14 +18,16 @@ export default class RestaurantHttpGateway implements RestaurantGateway {
   }
 
   async createProduct(data: DataCreateProduct, authorization: string) {
-    this.httpClient.post(`${this.baseUrl}/restaurant/products`, data, {
+    return this.httpClient.post(`${this.baseUrl}/restaurant/products`, data, {
       Authorization: "Bearer " + authorization,
     });
   }
 
   async createOrder() {}
 
-  async listProducts() {}
+  async listProducts(id: string) {
+    return this.httpClient.get(`${this.baseUrl}/restaurant/products/${id}`);
+  }
 
   async listOrders() {}
 

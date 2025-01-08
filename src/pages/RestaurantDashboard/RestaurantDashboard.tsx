@@ -8,8 +8,11 @@ export function RestaurantDashboard() {
 
   return (
     <MotionMain>
-      <CreateAndListProducts fields={{}} uri={uri} order={1} />
-      Restaurant Dashboard {restaurantId}
+      <CreateAndListProducts
+        fields={{ id: restaurantId }}
+        uri={uri}
+        order={1}
+      />
     </MotionMain>
   );
 }

@@ -3,8 +3,11 @@ import { DataCreateProduct } from "@/@core/infra/gateways/restaurant/Restaurant.
 import { restaurantGateway } from "@/@core/infra/gateways/restaurant/RestaurantHttp.gateway";
 import { getCookie } from "@/utils/functions";
 import { useState } from "react";
+import { FormCreateProductProps } from "./FormCreateProduct.types";
 
-export default function useFormCreateProductModel() {
+export default function useFormCreateProductModel({
+  closeModal,
+}: FormCreateProductProps) {
   const [values, setValues] = useState<DataCreateProduct>(
     {} as DataCreateProduct
   );
@@ -24,6 +27,7 @@ export default function useFormCreateProductModel() {
     }
 
     setErrors({});
+    closeModal();
     return data;
   }
 
