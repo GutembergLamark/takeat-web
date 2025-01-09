@@ -11,7 +11,7 @@ import {
   Credentials,
   DataCreateRestaurant,
 } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
-import { removeCookie, showToast } from "@/utils/functions";
+import { removeCookie } from "@/utils/functions";
 
 export function RestaurantProvider({ children }: IRestaurantProvider) {
   const localStorageRestaurant = JSON.parse(
@@ -72,12 +72,10 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
 
       setRestaurant(data?.restaurant);
       setErrorsLogin({});
-      showToast("success", <p>{data?.message}</p>);
       return navigate(`/restaurant/${data?.restaurant?.id}/dashboard`);
     }
 
     setErrorsLogin({});
-    showToast("error", <p>{data?.message}</p>);
     return data;
   }
 
@@ -96,8 +94,6 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
     }
 
     if (data?.data?.id) {
-      showToast("success", <p>data?.message</p>);
-
       const dataSession = await createSession?.execute({
         email: values?.email,
         password: values?.password,
@@ -110,7 +106,6 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
     }
 
     setErrorsRegister({});
-    showToast("error", <p>data?.message</p>);
     return data;
   }
 

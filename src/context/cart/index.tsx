@@ -5,7 +5,6 @@ import CreateOrder from "@/@core/domain/usecases/createOrder/createOrder.usecase
 import { restaurantGateway } from "@/@core/infra/gateways/restaurant/RestaurantHttp.gateway";
 import { DataCreateOrder } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
 import { useNavigate } from "react-router-dom";
-import { showToast } from "@/utils/functions";
 import GetRestaurant from "@/@core/domain/usecases/getRestaurant/getRestaurant.usecase";
 
 export function CartProvider({ children }: ICartProvider) {
@@ -145,13 +144,11 @@ export function CartProvider({ children }: ICartProvider) {
     if (data?.data?.id) {
       setCartProducts([]);
       setErrorsCart({});
-      showToast("success", <p>{data?.message}</p>);
       localStorageSet<Array<ProductCart>>("takeat_cart", []);
       return navigate(`/restaurant/${values?.restaurant_id}`);
     }
 
     setErrorsCart({});
-    showToast("error", <p>{data?.message}</p>);
     return data;
   }
 

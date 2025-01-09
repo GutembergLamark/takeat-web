@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { setCookie } from "@/utils/functions";
+import { setCookie, showToast } from "@/utils/functions";
 import IHttpClient from "./Http.types";
+import parse from "html-react-parser";
 
 export default class FetchAdapter implements IHttpClient {
   async get(url: string, headers?: HeadersInit): Promise<unknown> {
@@ -30,11 +31,22 @@ export default class FetchAdapter implements IHttpClient {
       .then(async (res: Response) => {
         const data = (await res.json()) as any;
 
-        if (!res.ok && res.status < 500) {
-          console.log(res);
+        if (!res.ok && res.status >= 500) {
+          showToast(
+            "error",
+            parse("<p>Erro interno, por favor, tente novamente mais tarde</p>")
+          );
+        }
+
+        if (!res.ok && res.status < 500 && data?.message) {
+          showToast("error", parse(`<p>${data?.message}</p>`));
         }
 
         if (res.ok) {
+          if ((res.status === 200 || res.status === 201) && data?.message) {
+            showToast("success", parse(`<p>${data?.message}</p>`));
+          }
+
           if (data?.restaurant?.authorization) {
             setCookie(
               "takeat_authorization",
@@ -47,7 +59,11 @@ export default class FetchAdapter implements IHttpClient {
         return data;
       })
       .catch((error) => {
-        console.error(error);
+        showToast(
+          "error",
+          parse("<p>Erro interno, por favor, tente novamente mais tarde</p>")
+        );
+        console.log(error);
       })
       .finally(() => {
         console.log("finally");

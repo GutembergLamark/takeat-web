@@ -1,10 +1,9 @@
 import CreateProduct from "@/@core/domain/usecases/createProduct/createProduct.usecase";
 import { DataCreateProduct } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
 import { restaurantGateway } from "@/@core/infra/gateways/restaurant/RestaurantHttp.gateway";
-import { getCookie, showToast } from "@/utils/functions";
+import { getCookie } from "@/utils/functions";
 import { useState } from "react";
 import { FormCreateProductProps } from "./FormCreateProduct.types";
-import parse from "html-react-parser";
 
 export default function useFormCreateProductModel({
   closeModal,
@@ -29,12 +28,10 @@ export default function useFormCreateProductModel({
 
     if (data?.data?.id) {
       setErrors({});
-      showToast("success", parse(`<p>${data?.message}</p>`));
       return closeModal();
     }
 
     setErrors({});
-    showToast("error", parse(`<p>${data?.message}</p>`));
     return closeModal();
   }
 
