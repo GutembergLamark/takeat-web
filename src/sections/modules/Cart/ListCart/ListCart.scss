@@ -20,7 +20,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: clamp(7rem, 17cqi, 10rem);
+
+      &:first-of-type {
+        margin-top: clamp(7rem, 17cqi, 10rem);
+      }
     }
   }
 
@@ -45,6 +48,10 @@
     & h3 {
       @include Poppins1-6rem($weight: 700);
       margin: clamp(1.4rem, 2.6cqi, 1.6rem) 0;
+    }
+
+    & hr {
+      margin: 1rem 0;
     }
 
     & p {

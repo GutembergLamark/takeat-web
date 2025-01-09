@@ -7,7 +7,7 @@ export function RestaurantDashboard() {
   const uri = `/restaurant/${restaurantId}/dashboard`;
 
   return (
-    <MotionMain>
+    <MotionMain key={uri} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <CreateAndListProducts
         fields={{ id: restaurantId }}
         uri={uri}

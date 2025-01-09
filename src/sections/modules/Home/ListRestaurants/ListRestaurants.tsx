@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
+import ListOfRestaurants from "./ListRestaurants.client";
 import "./ListRestaurants.scss";
 
 export function ListRestaurants(props: ModuleProps) {
@@ -8,6 +7,7 @@ export function ListRestaurants(props: ModuleProps) {
   return (
     <section className="l-restaurants wrapper">
       <h2>{fields?.title}</h2>
+      <ListOfRestaurants />
     </section>
   );
 }

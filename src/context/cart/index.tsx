@@ -6,6 +6,7 @@ import { restaurantGateway } from "@/@core/infra/gateways/restaurant/RestaurantH
 import { DataCreateOrder } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "@/utils/functions";
+import GetRestaurant from "@/@core/domain/usecases/getRestaurant/getRestaurant.usecase";
 
 export function CartProvider({ children }: ICartProvider) {
   const [cartProducts, setCartProducts] = useState<Array<ProductCart>>([]);
@@ -13,6 +14,9 @@ export function CartProvider({ children }: ICartProvider) {
     Partial<Pick<DataCreateOrder, "phone" | "name">>
   >({} as Partial<Pick<DataCreateOrder, "phone" | "name">>);
   const [restaurantPage, setRestaurantPage] = useState<string>("");
+  const [restaurantServiceTax, setRestaurantServiceTax] = useState<
+    boolean | null
+  >(null);
 
   const createOrder = new CreateOrder(restaurantGateway);
 
@@ -43,6 +47,33 @@ export function CartProvider({ children }: ICartProvider) {
     } catch (error) {
       console.error("Erro ao salvar no localStorage", error);
     }
+  }
+
+  async function setRestaurantHasTax(id: string) {
+    const getRestaurant = new GetRestaurant(restaurantGateway);
+
+    const data = await getRestaurant.execute(id);
+
+    if (data?.restaurant) {
+      localStorageSet<string>(
+        "takeat_restaurant_tax",
+        data?.restaurant?.has_service_tax
+      );
+      setRestaurantServiceTax(data?.restaurant?.has_service_tax);
+    }
+
+    return data;
+  }
+
+  function getRestaurantHasTax(): boolean {
+    const localTax = localStorage.getItem("takeat_restaurant_tax");
+    const parsedTax = localTax ? JSON.parse(localTax) : null;
+
+    if (restaurantServiceTax !== null) return restaurantServiceTax;
+
+    if (parsedTax !== null) return parsedTax;
+
+    return false;
   }
 
   function setRestaurantForCart(uri: string) {
@@ -135,6 +166,8 @@ export function CartProvider({ children }: ICartProvider) {
         cartProducts,
         getRestaurantForCart,
         setRestaurantForCart,
+        setRestaurantHasTax,
+        getRestaurantHasTax,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import { Button, Card } from "@/components/general";
 import { CartContext } from "@/context/cart/cart.context";
-import { useContext, useRef } from "react";
+import { Fragment, useContext, useRef } from "react";
 import emptyProducts from "@/assets/svg/empty-foods.svg";
 import { DefaultModalRef } from "@/components/modals/DefaultModal/DefaultModal.types";
 import { DefaultModal } from "@/components/modals";
@@ -9,7 +9,9 @@ import { FormBuyCart } from "@/components/forms";
 export default function ListOfProducts() {
   const modalRef = useRef<DefaultModalRef>(null);
 
-  const { cartProducts } = useContext(CartContext);
+  const { cartProducts, getRestaurantHasTax } = useContext(CartContext);
+
+  const hasTax = getRestaurantHasTax();
 
   const totalPrice = cartProducts?.reduce(
     (prev, cur) => prev + cur?.amount * cur.value,
@@ -34,12 +36,16 @@ export default function ListOfProducts() {
             ))}
 
             <p>
+              <span>Taxa de Serviço</span>
+              <span>{hasTax ? "10%" : "Sem taxa de serviço"}</span>
+            </p>
+            <p>
               <span>Total</span>
               <span>
                 {new Intl.NumberFormat("pt-br", {
                   style: "currency",
                   currency: "BRL",
-                }).format(totalPrice)}
+                }).format(hasTax ? totalPrice + totalPrice * 0.1 : totalPrice)}
               </span>
             </p>
 
@@ -72,41 +78,58 @@ export default function ListOfProducts() {
 
           <article>
             <h3>Detalhes da Transação:</h3>
-
-            {cartProducts?.map((product) => {
-              return (
-                <div
-                  key={`details-transaction-${product?.id}-${product?.name}`}
-                >
-                  <p>
-                    <span>Nome do produto</span>
-                    <span>{product?.name}</span>
-                  </p>
-                  <p>
-                    <span>Quantidade</span>
-                    <span>{product?.amount}</span>
-                  </p>
-                  <p>
-                    <span>Preço do produto</span>
-                    <span>
-                      {new Intl.NumberFormat("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(product?.value)}
-                    </span>
-                  </p>
-                  <p>
-                    <span>Preço total do produto</span>
-                    <span>
-                      {new Intl.NumberFormat("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(product?.amount * product?.value)}
-                    </span>
-                  </p>
-                </div>
-              );
-            })}
+            <div>
+              {cartProducts?.map((product) => {
+                return (
+                  <Fragment
+                    key={`details-transaction-${product?.id}-${product?.name}`}
+                  >
+                    <p>
+                      <span>Nome do produto</span>
+                      <span>{product?.name}</span>
+                    </p>
+                    <p>
+                      <span>Quantidade</span>
+                      <span>{product?.amount}</span>
+                    </p>
+                    <p>
+                      <span>Preço do produto</span>
+                      <span>
+                        {new Intl.NumberFormat("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(product?.value)}
+                      </span>
+                    </p>
+                    <p>
+                      <span>Preço total do produto</span>
+                      <span>
+                        {new Intl.NumberFormat("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(product?.amount * product?.value)}
+                      </span>
+                    </p>
+                  </Fragment>
+                );
+              })}
+              <hr />
+              <p>
+                <span>Taxa de Serviço</span>
+                <span>{hasTax ? "10%" : "Sem taxa de serviço"}</span>
+              </p>
+              <p>
+                <span>Total do Carrinho</span>
+                <span>
+                  {new Intl.NumberFormat("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(
+                    hasTax ? totalPrice + totalPrice * 0.1 : totalPrice
+                  )}
+                </span>
+              </p>
+            </div>
 
             <FormBuyCart
               amount={cartProducts[0]?.amount}

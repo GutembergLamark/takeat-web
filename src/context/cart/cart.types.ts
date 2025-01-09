@@ -11,6 +11,8 @@ export interface ICartContext {
   cartProducts: ProductCart[];
   getRestaurantForCart(): string;
   setRestaurantForCart(uri: string): void;
+  setRestaurantHasTax(id: string): void;
+  getRestaurantHasTax(): boolean;
 }
 
 export interface ICartProvider {

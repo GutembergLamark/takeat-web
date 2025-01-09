@@ -38,6 +38,10 @@ export default class RestaurantHttpGateway implements RestaurantGateway {
     return this.httpClient.get(`${this.baseUrl}/public/restaurants`);
   }
 
+  async getRestaurant(id: string) {
+    return this.httpClient.get(`${this.baseUrl}/restaurant/${id}`);
+  }
+
   async session(credentials: Credentials) {
     return await this.httpClient.post(
       `${this.baseUrl}/public/login`,

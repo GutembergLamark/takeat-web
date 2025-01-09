@@ -14,6 +14,8 @@ export interface RestaurantGateway {
 
   listRestaurants(): Promise<unknown>;
 
+  getRestaurant(id: string): Promise<unknown>;
+
   session(credentials: Credentials): Promise<unknown>;
 }
 

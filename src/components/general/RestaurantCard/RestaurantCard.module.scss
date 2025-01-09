@@ -1,0 +1,54 @@
+@use "@/assets/sass/abstracts/typography" as *;
+@use "@/assets/sass/abstracts/variables" as *;
+
+.card {
+  border-radius: 0.8rem;
+  box-shadow: $shadow;
+  max-width: 27rem;
+  min-width: 23rem;
+  display: flex;
+  flex-flow: column;
+
+  &:hover {
+    opacity: 1;
+
+    & img {
+      transition: all 0.2s ease-in-out;
+      scale: 1.1;
+    }
+  }
+
+  & picture {
+    overflow: hidden;
+    max-width: inherit;
+    display: block;
+    border-radius: 0.8rem;
+  }
+
+  & article {
+    padding: 1.5rem clamp(2rem, 4.8cqi, 2.8rem);
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+
+    & h3 {
+      @include Poppins1-6rem($weight: 700);
+      margin-bottom: 0.8rem;
+    }
+
+    & h4 {
+      @include Poppins1-4rem($weight: 700);
+      margin-top: auto;
+      margin-bottom: 0.8rem;
+    }
+
+    & p {
+      @include Poppins1-4rem;
+      word-break: break-word;
+
+      &:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}

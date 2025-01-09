@@ -5,7 +5,12 @@ import "@/assets/sass/pages/login.scss";
 export function Login() {
   const uri = "/login";
   return (
-    <MotionMain className="login">
+    <MotionMain
+      key={uri}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="login"
+    >
       <LoginModule fields={{}} uri={uri} order={1} />
     </MotionMain>
   );

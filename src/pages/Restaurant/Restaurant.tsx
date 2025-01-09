@@ -8,14 +8,15 @@ export function Restaurant() {
   const { restaurantId } = useParams();
   const uri = `/restaurant/${restaurantId}`;
 
-  const { setRestaurantForCart } = useContext(CartContext);
+  const { setRestaurantForCart, setRestaurantHasTax } = useContext(CartContext);
 
   useEffect(() => {
     setRestaurantForCart(restaurantId || "");
+    setRestaurantHasTax(restaurantId || "");
   }, [restaurantId]);
 
   return (
-    <MotionMain>
+    <MotionMain key={uri} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <ListRestaurant
         fields={{ id: restaurantId, title: "Produtos" }}
         uri={uri}

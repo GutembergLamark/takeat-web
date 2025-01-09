@@ -5,7 +5,12 @@ import "@/assets/sass/pages/register.scss";
 export function Register() {
   const uri = "/register";
   return (
-    <MotionMain className="register">
+    <MotionMain
+      key={uri}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="register"
+    >
       <RegisterModule fields={{}} uri={uri} order={1} />
     </MotionMain>
   );

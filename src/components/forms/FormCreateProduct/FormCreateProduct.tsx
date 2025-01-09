@@ -18,8 +18,6 @@ export function FormCreateProduct({ closeModal }: FormCreateProductProps) {
       onSubmit={async (e) => {
         e.preventDefault();
 
-        console.log(closeModal);
-
         await onSubmit();
       }}
     >
