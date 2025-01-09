@@ -100,8 +100,9 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
       });
 
       if (dataSession?.restaurant?.authorization) {
+        setRestaurant(dataSession?.restaurant);
         setErrorsRegister({});
-        return navigate(`/restaurant/${data?.restaurant?.id}/dashboard`);
+        return navigate(`/restaurant/${dataSession?.restaurant?.id}/dashboard`);
       }
     }
 
