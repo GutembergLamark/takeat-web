@@ -2,6 +2,7 @@ import { HttpClient } from "../../adapters/http";
 import IHttpClient from "../../adapters/http/Http.types";
 import {
   Credentials,
+  DataCreateOrder,
   DataCreateProduct,
   DataCreateRestaurant,
   RestaurantGateway,
@@ -23,13 +24,19 @@ export default class RestaurantHttpGateway implements RestaurantGateway {
     });
   }
 
-  async createOrder() {}
+  async createOrder(data: DataCreateOrder) {
+    return this.httpClient.post(`${this.baseUrl}/restaurant/orders`, data);
+  }
 
   async listProducts(id: string) {
     return this.httpClient.get(`${this.baseUrl}/restaurant/products/${id}`);
   }
 
   async listOrders() {}
+
+  async listRestaurants() {
+    return this.httpClient.get(`${this.baseUrl}/public/restaurants`);
+  }
 
   async session(credentials: Credentials) {
     return await this.httpClient.post(

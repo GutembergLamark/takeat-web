@@ -37,7 +37,7 @@
     margin-top: clamp(10rem, 25cqi, 15rem);
 
     & p {
-      align-items: center;
+      text-align: center;
     }
   }
 
@@ -56,6 +56,10 @@
       &:not(:last-of-type) {
         margin-bottom: 1rem;
       }
+    }
+
+    & article div {
+      margin-bottom: 3rem;
     }
 
     & button {

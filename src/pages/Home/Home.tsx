@@ -1,3 +1,11 @@
+import { ListRestaurants } from "@/sections/modules/Home";
+import { MotionMain } from "@/utils/libs/motion";
+
 export function Home() {
-  return <div>Olá mundo</div>;
+  const uri = "/";
+  return (
+    <MotionMain>
+      <ListRestaurants fields={{ title: "Restaurantes" }} uri={uri} order={1} />
+    </MotionMain>
+  );
 }

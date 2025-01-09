@@ -4,10 +4,13 @@ import { useContext, useRef } from "react";
 import emptyProducts from "@/assets/svg/empty-foods.svg";
 import { DefaultModalRef } from "@/components/modals/DefaultModal/DefaultModal.types";
 import { DefaultModal } from "@/components/modals";
+import { FormBuyCart } from "@/components/forms";
 
 export default function ListOfProducts() {
   const modalRef = useRef<DefaultModalRef>(null);
-  const { cartProducts, buyCart } = useContext(CartContext);
+
+  const { cartProducts } = useContext(CartContext);
+
   const totalPrice = cartProducts?.reduce(
     (prev, cur) => prev + cur?.amount * cur.value,
     0
@@ -105,17 +108,10 @@ export default function ListOfProducts() {
               );
             })}
 
-            <Button
-              type="button"
-              styleType="default"
-              buttonProps={{
-                type: "button",
-                onClick: () => modalRef?.current?.showModal(),
-              }}
-              color="red"
-            >
-              Finalizar Compra
-            </Button>
+            <FormBuyCart
+              amount={cartProducts[0]?.amount}
+              product={cartProducts[0]?.id}
+            />
           </article>
         </section>
       </DefaultModal>

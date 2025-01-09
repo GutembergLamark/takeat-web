@@ -35,8 +35,12 @@ export default class FetchAdapter implements IHttpClient {
         }
 
         if (res.ok) {
-          if (data?.authorization) {
-            setCookie("takeat_authorization", data?.authorization, 30);
+          if (data?.restaurant?.authorization) {
+            setCookie(
+              "takeat_authorization",
+              data?.restaurant?.authorization,
+              30
+            );
           }
         }
 

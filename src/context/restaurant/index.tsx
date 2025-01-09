@@ -11,11 +11,15 @@ import {
   Credentials,
   DataCreateRestaurant,
 } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
-import { removeCookie } from "@/utils/functions";
+import { removeCookie, showToast } from "@/utils/functions";
 
 export function RestaurantProvider({ children }: IRestaurantProvider) {
+  const localStorageRestaurant = JSON.parse(
+    (localStorage.getItem("takeat_restaurant") as string) ?? null
+  );
+
   const [restaurant, setRestaurant] = useState<Partial<IRestaurant> | null>(
-    null as IRestaurant | null
+    (localStorageRestaurant ?? null) as IRestaurant | null
   );
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -63,16 +67,17 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
       return setErrorsLogin(data?.errors);
     }
 
-    if (data.authorization) {
-      delete data.authorization;
+    if (data?.restaurant?.authorization) {
+      delete data?.restaurant?.authorization;
 
-      setRestaurant(data);
-
+      setRestaurant(data?.restaurant);
       setErrorsLogin({});
-      return navigate(`/restaurant/${data?.id}/dashboard`);
+      showToast("success", <p>{data?.message}</p>);
+      return navigate(`/restaurant/${data?.restaurant?.id}/dashboard`);
     }
 
     setErrorsLogin({});
+    showToast("error", <p>{data?.message}</p>);
     return data;
   }
 
@@ -91,18 +96,21 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
     }
 
     if (data?.data?.id) {
+      showToast("success", <p>data?.message</p>);
+
       const dataSession = await createSession?.execute({
         email: values?.email,
         password: values?.password,
       });
 
-      if (dataSession.authorization) {
+      if (dataSession?.restaurant?.authorization) {
         setErrorsRegister({});
-        return navigate(`/restaurant/${data?.id}/dashboard`);
+        return navigate(`/restaurant/${data?.restaurant?.id}/dashboard`);
       }
     }
 
     setErrorsRegister({});
+    showToast("error", <p>data?.message</p>);
     return data;
   }
 

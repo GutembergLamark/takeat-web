@@ -1,0 +1,10 @@
+@use "@/assets/sass/abstracts/variables" as *;
+@use "@/assets/sass/abstracts/typography" as *;
+
+.container {
+  top: 10rem !important;
+
+  & p {
+    @include Poppins1-4rem;
+  }
+}

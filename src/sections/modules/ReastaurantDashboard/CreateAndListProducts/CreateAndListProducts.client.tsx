@@ -14,35 +14,40 @@ import Product from "@/@core/domain/entities/product/Product";
 export default function ActionForOpenModal({ id }: ActionForOpenModalProps) {
   const modalRef = useRef<DefaultModalRef>(null);
   const [products, setProducts] = useState<Array<IProduct>>([]);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const listProducts = new ListProducts(restaurantGateway);
 
   useEffect(() => {
     (async () => {
-      const data = await listProducts.execute(id);
+      if (!openModal) {
+        const data = await listProducts.execute(id);
 
-      const formatedProducts = data.products.map((product: IProduct) => {
-        const newProduct = new Product(
-          product.id,
-          product.name,
-          product.description,
-          product.value,
-          product.canceled_at,
-          product.createdAt,
-          product.updatedAt,
-          product.restaurant_id
+        const formatedProducts = data.products.map((product: IProduct) => {
+          const newProduct = new Product(
+            product.id,
+            product.name,
+            product.description,
+            product.value,
+            product.canceled_at,
+            product.createdAt,
+            product.updatedAt,
+            product.restaurant_id
+          );
+
+          return newProduct;
+        });
+
+        setProducts(
+          formatedProducts.map((product: Product) => product.toJSON())
         );
-
-        return newProduct;
-      });
-
-      setProducts(formatedProducts.map((product: Product) => product.toJSON()));
+      }
     })();
-  }, [modalRef?.current?.closeModal]);
+  }, [openModal]);
 
   return (
     <>
-      <DefaultModal ref={modalRef}>
+      <DefaultModal ref={modalRef} setOpenModal={setOpenModal}>
         <FormCreateProduct closeModal={modalRef?.current?.closeModal!} />
       </DefaultModal>
 
@@ -73,12 +78,12 @@ export default function ActionForOpenModal({ id }: ActionForOpenModalProps) {
             );
           })
         ) : (
-          <>
+          <div className="cl-products__empty">
             <picture>
               <img src={emptyProducts} alt="Sem Produtos" />
             </picture>
             <p>Seu restaurante ainda não tem produtos cadastrados</p>
-          </>
+          </div>
         )}
       </div>
     </>

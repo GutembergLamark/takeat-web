@@ -10,19 +10,26 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import { DefaultModalProps, DefaultModalRef } from "./DefaultModal.types";
 
 export const DefaultModal = forwardRef<DefaultModalRef, DefaultModalProps>(
-  ({ children }, ref) => {
+  ({ children, setOpenModal }, ref) => {
     const [open, setOpen] = useState(false);
 
     function showModal() {
+      if (setOpenModal) {
+        setOpenModal(true);
+      }
       return setOpen(true);
     }
     function closeModal() {
+      if (setOpenModal) {
+        setOpenModal(false);
+      }
       return setOpen(false);
     }
 
     useImperativeHandle(ref, () => ({
       showModal,
       closeModal,
+      open,
     }));
 
     return (

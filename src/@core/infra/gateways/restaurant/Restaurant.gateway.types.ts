@@ -6,11 +6,13 @@ export interface RestaurantGateway {
     authorization: string
   ): Promise<unknown>;
 
-  createOrder(): Promise<unknown>;
+  createOrder(data: DataCreateOrder): Promise<unknown>;
 
   listProducts(id: string): Promise<unknown>;
 
   listOrders(): Promise<unknown>;
+
+  listRestaurants(): Promise<unknown>;
 
   session(credentials: Credentials): Promise<unknown>;
 }
@@ -34,4 +36,12 @@ export interface DataCreateProduct {
   name: string;
   description: string;
   value: number;
+}
+
+export interface DataCreateOrder {
+  product: string;
+  phone: string;
+  amount: number;
+  name?: string;
+  restaurant_id: string;
 }
