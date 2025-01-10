@@ -10,7 +10,8 @@ import {
   Credentials,
   DataCreateRestaurant,
 } from "@/@core/infra/gateways/restaurant/Restaurant.gateway.types";
-import { removeCookie } from "@/utils/functions";
+import { getCookie, removeCookie } from "@/utils/functions";
+import ListOrders from "@/@core/domain/usecases/listOrders/listOrders.usecase";
 
 export function RestaurantProvider({ children }: IRestaurantProvider) {
   const localStorageRestaurant = JSON.parse(
@@ -112,6 +113,14 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
     return data;
   }
 
+  async function getOrders() {
+    const authorization = getCookie("takeat_authorization");
+
+    const listOrders = new ListOrders(restaurantGateway);
+
+    return await listOrders?.execute(authorization);
+  }
+
   return (
     <RestaurantContext.Provider
       value={{
@@ -120,6 +129,7 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
         login,
         logout,
         register,
+        getOrders,
         errorsLogin,
         errorsRegister,
       }}

@@ -11,6 +11,7 @@ export interface IRestaurantContext {
   login(values: Credentials): Promise<any>;
   logout(): void;
   register(values: DataCreateRestaurant): Promise<any>;
+  getOrders(): Promise<any>;
   errorsLogin: Partial<Credentials>;
   errorsRegister: Partial<Omit<DataCreateRestaurant, "has_service_tax">>;
 }

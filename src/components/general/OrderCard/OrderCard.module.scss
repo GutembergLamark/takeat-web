@@ -1,0 +1,32 @@
+@use "@/assets/sass/abstracts/typography" as *;
+@use "@/assets/sass/abstracts/variables" as *;
+
+.card {
+  & h3 {
+    @include Poppins1-6rem($weight: 700);
+    margin-bottom: 2.5rem;
+  }
+
+  & h4 {
+    @include Poppins1-4rem($weight: 700);
+  }
+
+  & p {
+    @include Poppins1-4rem;
+  }
+
+  &__topic {
+    display: flex;
+    flex-flow: column;
+    gap: 0.8rem;
+
+    & p {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &:not(:last-of-type) {
+      margin-bottom: clamp(2rem, 6.2cqi, 3.2rem);
+    }
+  }
+}
