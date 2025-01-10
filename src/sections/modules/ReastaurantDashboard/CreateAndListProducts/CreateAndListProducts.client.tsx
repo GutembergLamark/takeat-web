@@ -32,14 +32,14 @@ export default function ActionForOpenModal({ id }: ActionForOpenModalProps) {
             product.canceled_at,
             product.createdAt,
             product.updatedAt,
-            product.restaurant_id
+            product.restaurant_id,
           );
 
           return newProduct;
         });
 
         setProducts(
-          formatedProducts.map((product: Product) => product.toJSON())
+          formatedProducts.map((product: Product) => product.toJSON()),
         );
       }
     })();
@@ -64,7 +64,7 @@ export default function ActionForOpenModal({ id }: ActionForOpenModalProps) {
       </Button>
 
       <div className="cl-products__products">
-        {products?.length ?? 0 > 0 ? (
+        {(products?.length ?? 0 > 0) ? (
           products?.map((product) => {
             return (
               <Card

@@ -10,7 +10,7 @@ export default class Restaurant {
     public readonly has_service_tax: boolean,
     public readonly canceled_at: string | null,
     public readonly createdAt: string,
-    public readonly updatedAt: string
+    public readonly updatedAt: string,
   ) {}
 
   toJSON(): IRestaurant {

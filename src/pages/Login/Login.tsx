@@ -11,7 +11,7 @@ export function Login() {
       animate={{ opacity: 1 }}
       className="login"
     >
-      <LoginModule fields={{}} uri={uri} order={1} />
+      <LoginModule />
     </MotionMain>
   );
 }

@@ -11,7 +11,7 @@ export default class ZodAdapter implements IValidator {
 
   errors<T>(
     data: T,
-    schema: ZodObject<any> | ZodEffects<ZodObject<any>>
+    schema: ZodObject<any> | ZodEffects<ZodObject<any>>,
   ): T | object {
     const result = schema.safeParse(data);
 

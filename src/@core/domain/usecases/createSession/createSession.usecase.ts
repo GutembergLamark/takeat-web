@@ -15,7 +15,7 @@ export default class CreateSession implements ICreateSession {
 
     const validate = validator.validate<Credentials>(
       credentials,
-      createSessionSchema
+      createSessionSchema,
     );
 
     if (validate) {

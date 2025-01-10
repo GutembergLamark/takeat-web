@@ -9,7 +9,7 @@ export default class Product {
     public readonly canceled_at: string | null,
     public readonly createdAt: string,
     public readonly updatedAt: string,
-    public readonly restaurant_id: string
+    public readonly restaurant_id: string,
   ) {}
 
   toJSON(): IProduct {

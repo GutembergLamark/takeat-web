@@ -18,7 +18,7 @@ export default class FetchAdapter implements IHttpClient {
   async post(
     url: string,
     body: unknown,
-    headers?: HeadersInit
+    headers?: HeadersInit,
   ): Promise<unknown> {
     const response = await fetch(url, {
       method: "POST",
@@ -34,7 +34,7 @@ export default class FetchAdapter implements IHttpClient {
         if (!res.ok && res.status >= 500) {
           showToast(
             "error",
-            parse("<p>Erro interno, por favor, tente novamente mais tarde</p>")
+            parse("<p>Erro interno, por favor, tente novamente mais tarde</p>"),
           );
         }
 
@@ -51,7 +51,7 @@ export default class FetchAdapter implements IHttpClient {
             setCookie(
               "takeat_authorization",
               data?.restaurant?.authorization,
-              30
+              30,
             );
           }
         }
@@ -61,7 +61,7 @@ export default class FetchAdapter implements IHttpClient {
       .catch((error) => {
         showToast(
           "error",
-          parse("<p>Erro interno, por favor, tente novamente mais tarde</p>")
+          parse("<p>Erro interno, por favor, tente novamente mais tarde</p>"),
         );
         console.log(error);
       })
@@ -75,7 +75,7 @@ export default class FetchAdapter implements IHttpClient {
   async put(
     url: string,
     body: unknown,
-    headers?: HeadersInit
+    headers?: HeadersInit,
   ): Promise<unknown> {
     const response = await fetch(url, {
       method: "PUT",

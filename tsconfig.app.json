@@ -16,6 +16,8 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "allowJs": true,
+    "types": ["vitest/globals"],
     "jsx": "react-jsx",
 
     /* Linting */
@@ -25,5 +27,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "**/?(*.)+(spec|test).[tj]s?(x)"]
 }

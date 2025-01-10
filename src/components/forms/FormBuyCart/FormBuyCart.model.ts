@@ -8,7 +8,7 @@ export default function useFormBuyCartModel({
   product,
 }: FormBuyCartProps) {
   const [values, setValues] = useState<Pick<DataCreateOrder, "phone" | "name">>(
-    {} as Pick<DataCreateOrder, "phone" | "name">
+    {} as Pick<DataCreateOrder, "phone" | "name">,
   );
   const {
     buyCart,

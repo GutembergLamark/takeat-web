@@ -15,7 +15,7 @@ export default class CreateOrder implements ICreateOrder {
 
     const validate = validator.validate<DataCreateOrder>(
       data,
-      createOrderSchema
+      createOrderSchema,
     );
 
     if (validate) {

@@ -43,7 +43,7 @@ export function FormBuyCart({ amount, product }: FormBuyCartProps) {
               null,
               setValues,
               "phone",
-              value
+              value,
             ),
         }}
         label="Telefone:"

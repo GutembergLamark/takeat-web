@@ -16,10 +16,10 @@ export function handleChange<T>(
   e: ChangeEvent<HTMLInputElement> | any,
   setValues: Dispatch<SetStateAction<T>>,
   name: string = "",
-  value: string = ""
+  value: string = "",
 ): void {
-  const eventName = !name ? e.target.id ?? "" : name;
-  const eventValue = !value ? e.target.value ?? "" : value;
+  const eventName = !name ? (e.target.id ?? "") : name;
+  const eventValue = !value ? (e.target.value ?? "") : value;
 
   return setValues((oldValues: T) => {
     return { ...oldValues, [eventName]: eventValue };
@@ -105,7 +105,7 @@ export const defaultToastOptions: ToastOptions = {
 export const showToast = (
   type: ToastType,
   content: ToastContent,
-  options: Partial<ToastOptions> = {}
+  options: Partial<ToastOptions> = {},
 ): Id => {
   const optionsToApply = { ...defaultToastOptions, ...options };
 

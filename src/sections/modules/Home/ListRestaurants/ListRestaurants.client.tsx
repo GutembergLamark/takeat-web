@@ -25,22 +25,22 @@ export default function ListOfRestaurants() {
             restaurant?.has_service_tax,
             restaurant?.canceled_at,
             restaurant?.createdAt,
-            restaurant?.updatedAt
+            restaurant?.updatedAt,
           );
 
           return newRestaurant;
-        }
+        },
       );
 
       setRestaurants(
-        formatedRestaurants.map((product: Restaurant) => product.toJSON())
+        formatedRestaurants.map((product: Restaurant) => product.toJSON()),
       );
     })();
   }, []);
 
   return (
     <div className="l-restaurants__list">
-      {restaurants?.length ?? 0 > 0
+      {(restaurants?.length ?? 0 > 0)
         ? restaurants?.map((restaurant) => (
             <RestaurantCard
               key={`restaurant-item-${restaurant?.id}`}

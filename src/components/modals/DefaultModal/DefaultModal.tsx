@@ -66,5 +66,5 @@ export const DefaultModal = forwardRef<DefaultModalRef, DefaultModalProps>(
         )}
       </AnimatePresence>
     );
-  }
+  },
 );

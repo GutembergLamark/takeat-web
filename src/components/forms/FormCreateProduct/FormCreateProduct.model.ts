@@ -9,7 +9,7 @@ export default function useFormCreateProductModel({
   closeModal,
 }: FormCreateProductProps) {
   const [values, setValues] = useState<DataCreateProduct>(
-    {} as DataCreateProduct
+    {} as DataCreateProduct,
   );
   const [errors, setErrors] = useState<
     Partial<Omit<DataCreateProduct, "value"> & { value: string }>

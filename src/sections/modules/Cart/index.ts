@@ -1,2 +1,2 @@
-export { ListCart } from './ListCart/ListCart'
+export { ListCart } from "./ListCart/ListCart";
 //<TAKEAT-BACK-AUTO-IMPORT>//

@@ -24,7 +24,7 @@ export default function ListOfProducts({ id }: ListOfProductsProps) {
           product.canceled_at,
           product.createdAt,
           product.updatedAt,
-          product.restaurant_id
+          product.restaurant_id,
         );
 
         return newProduct;
@@ -36,7 +36,7 @@ export default function ListOfProducts({ id }: ListOfProductsProps) {
 
   return (
     <div className="l-restaurant__products">
-      {products?.length ?? 0 > 0
+      {(products?.length ?? 0 > 0)
         ? products?.map((product) => {
             return (
               <Card

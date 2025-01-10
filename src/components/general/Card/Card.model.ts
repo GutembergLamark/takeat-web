@@ -17,7 +17,7 @@ export default function useCardModel({
   const { addProduct, removeProduct, updateAmountProduct } =
     useContext(CartContext);
 
-  const [amount, setAmount] = useState<number>(inCart ? amountCart ?? 0 : 0);
+  const [amount, setAmount] = useState<number>(inCart ? (amountCart ?? 0) : 0);
 
   const modalRef = useRef<DefaultModalRef>(null);
 

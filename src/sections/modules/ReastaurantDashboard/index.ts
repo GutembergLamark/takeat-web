@@ -1,2 +1,2 @@
-export { CreateAndListProducts } from './CreateAndListProducts/CreateAndListProducts'
+export { CreateAndListProducts } from "./CreateAndListProducts/CreateAndListProducts";
 //<TAKEAT-BACK-AUTO-IMPORT>//

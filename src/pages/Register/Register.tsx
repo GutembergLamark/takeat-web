@@ -11,7 +11,7 @@ export function Register() {
       animate={{ opacity: 1 }}
       className="register"
     >
-      <RegisterModule fields={{}} uri={uri} order={1} />
+      <RegisterModule />
     </MotionMain>
   );
 }

@@ -3,7 +3,7 @@ export interface RestaurantGateway {
 
   createProduct(
     data: DataCreateProduct,
-    authorization: string
+    authorization: string,
   ): Promise<unknown>;
 
   createOrder(data: DataCreateOrder): Promise<unknown>;

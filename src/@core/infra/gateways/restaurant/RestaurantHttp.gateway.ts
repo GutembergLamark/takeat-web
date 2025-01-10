@@ -9,12 +9,15 @@ import {
 } from "./Restaurant.gateway.types";
 
 export default class RestaurantHttpGateway implements RestaurantGateway {
-  constructor(readonly httpClient: IHttpClient, readonly baseUrl: string) {}
+  constructor(
+    readonly httpClient: IHttpClient,
+    readonly baseUrl: string,
+  ) {}
 
   async createRestaurant(data: DataCreateRestaurant) {
     return await this.httpClient.post(
       `${this.baseUrl}/public/restaurants`,
-      data
+      data,
     );
   }
 
@@ -39,13 +42,13 @@ export default class RestaurantHttpGateway implements RestaurantGateway {
   }
 
   async getRestaurant(id: string) {
-    return this.httpClient.get(`${this.baseUrl}/restaurant/${id}`);
+    return this.httpClient.get(`${this.baseUrl}/restaurant/data/${id}`);
   }
 
   async session(credentials: Credentials) {
     return await this.httpClient.post(
       `${this.baseUrl}/public/login`,
-      credentials
+      credentials,
     );
   }
 }
@@ -54,5 +57,5 @@ export const httpClient = new HttpClient();
 
 export const restaurantGateway = new RestaurantHttpGateway(
   httpClient,
-  import.meta.env.VITE_API_HOST
+  import.meta.env.VITE_API_HOST,
 );

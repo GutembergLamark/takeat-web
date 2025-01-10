@@ -12,7 +12,7 @@ export const createRestaurantSchema = z
         },
         {
           message: "Insira um nome e um sobrenome",
-        }
+        },
       ),
     email: z
       .string({ message: "Email é obrigatório" })
@@ -30,7 +30,7 @@ export const createRestaurantSchema = z
         {
           message:
             'Telefone inválido, deve ter o formato "+55 (00) 00000-0000"',
-        }
+        },
       ),
 
     address: z
@@ -48,7 +48,7 @@ export const createRestaurantSchema = z
         {
           message:
             "A senha deve ter no mínimo 8 caracteres, uma letra maiúscula, uma letra minúscula e um caractere especial",
-        }
+        },
       ),
     confirm: z
       .string({

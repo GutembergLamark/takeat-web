@@ -21,7 +21,7 @@ export default class CreateRestaurant implements ICreateRestaurant {
 
     const validate = validator.validate<DataCreateRestaurant>(
       data,
-      createRestaurantSchema
+      createRestaurantSchema,
     );
 
     if (validate) {
@@ -33,7 +33,7 @@ export default class CreateRestaurant implements ICreateRestaurant {
       return {
         errors: validator.errors<DataCreateRestaurant>(
           data,
-          createRestaurantSchema
+          createRestaurantSchema,
         ),
       };
     }

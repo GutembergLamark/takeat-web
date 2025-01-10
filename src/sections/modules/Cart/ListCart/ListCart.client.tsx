@@ -15,13 +15,13 @@ export default function ListOfProducts() {
 
   const totalPrice = cartProducts?.reduce(
     (prev, cur) => prev + cur?.amount * cur.value,
-    0
+    0,
   );
 
   return (
     <>
       <div className="l-cart__products">
-        {cartProducts?.length ?? 0 > 0 ? (
+        {(cartProducts?.length ?? 0 > 0) ? (
           <>
             {cartProducts?.map((product) => (
               <Card
@@ -125,7 +125,7 @@ export default function ListOfProducts() {
                     style: "currency",
                     currency: "BRL",
                   }).format(
-                    hasTax ? totalPrice + totalPrice * 0.1 : totalPrice
+                    hasTax ? totalPrice + totalPrice * 0.1 : totalPrice,
                   )}
                 </span>
               </p>

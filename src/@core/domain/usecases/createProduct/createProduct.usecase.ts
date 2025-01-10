@@ -15,7 +15,7 @@ export default class CreateProduct implements ICreateProduct {
 
     const validate = validator.validate<DataCreateProduct>(
       data,
-      createProductSchema
+      createProductSchema,
     );
 
     if (validate) {

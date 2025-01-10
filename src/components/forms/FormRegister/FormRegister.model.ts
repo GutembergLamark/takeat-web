@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 
 export default function useFormRegisterModel() {
   const [values, setValues] = useState<DataCreateRestaurant>(
-    {} as DataCreateRestaurant
+    {} as DataCreateRestaurant,
   );
   const { register, errorsRegister: errors } = useContext(RestaurantContext);
 
