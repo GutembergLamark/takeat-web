@@ -3,8 +3,8 @@ name: Automated Tests
 on: pull_request
 
 jobs:
-  jest:
-    name: Jest Ubunto
+  vitest:
+    name: Vitest Ubunto
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
