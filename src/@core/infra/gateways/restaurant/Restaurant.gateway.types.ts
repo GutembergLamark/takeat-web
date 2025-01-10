@@ -10,7 +10,7 @@ export interface RestaurantGateway {
 
   listProducts(id: string): Promise<unknown>;
 
-  listOrders(): Promise<unknown>;
+  listOrders(authorization: string): Promise<unknown>;
 
   listRestaurants(): Promise<unknown>;
 

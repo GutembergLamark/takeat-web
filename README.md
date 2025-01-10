@@ -1,77 +1,156 @@
-# React + TypeScript + Vite
+# Takeat Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma aplicação **React** criada como parte de um teste técnico para a empresa Takeat. Ele utiliza tecnologias modernas como **Vite**, **TypeScript** e **Vitest** para um ambiente de desenvolvimento rápido e eficiente. Além disso, o projeto conta com integrações para linting e testes automatizados via **GitHub Workflows**.
 
-Currently, two official plugins are available:
+## Pré-requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Certifique-se de ter as seguintes ferramentas instaladas:
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/) (versão recomendada: 18 ou superior)
+- [npm](https://www.npmjs.com/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Instalação
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone o repositório:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+   ```bash
+   git clone https://github.com/GutembergLamark/takeat-web.git
+   cd takeat-web
+   ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Instale as dependências:
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
+   ```bash
+   npm install
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+## Scripts Disponíveis
 
-Questionario
+Os seguintes scripts estão disponíveis no projeto:
 
-1 - Descreva o que é useEffect, sua usabilidade e cite algum cenário em que seja
-necessário.
+### Desenvolvimento
 
-R -
+- **`npm run dev`**
 
-2 - Cite um caso onde você vê necessidade de usar useState, e faça uma correlação
-com o useEffect.
+  Inicia o servidor de desenvolvimento com **Vite**.
 
-R -
+  ```bash
+  npm run dev
+  ```
 
-3 - Descreva useCallback, sua usabilidade em algum cenário real.
+### Build de Produção
 
-R -
+- **`npm run build`**
 
-4 - Já trabalhou ou conhece o useContext? Onde você aplicaria em uma projeto real,
-onde o menu (cardápio do restaurante) é baixado através de um rota GET da API, e
-disponibilizado em uma página /menu listando pro usuário o menu do restaurante.
-(Pense em otimização, renderização e problemas que podem ocorrer pro usuário).
+  Gera uma build otimizada para produção.
 
-R -
+  ```bash
+  npm run build
+  ```
 
-5 - Em qual caso você aplicaria o uso do useImperativeHandle? Justifique.
+- **`npm run preview`**
 
-R -
+  Pré-visualiza a build de produção.
+
+  ```bash
+  npm run preview
+  ```
+
+### Testes
+
+- **`npm run test`**
+
+  Executa os testes automatizados com **Vitest**.
+
+  ```bash
+  npm run test
+  ```
+
+- **`npm run test:watch`**
+
+  Executa os testes em modo de observação para desenvolvimento.
+
+  ```bash
+  npm run test:watch
+  ```
+
+- **`npm run test:list`**
+
+  Lista todos os testes disponíveis no projeto.
+
+  ```bash
+  npm run test:list
+  ```
+
+### Linting
+
+- **`npm run lint:eslint:check`**
+
+  Verifica problemas de linting com **ESLint**.
+
+  ```bash
+  npm run lint:eslint:check
+  ```
+
+- **`npm run lint:prettier:check`**
+
+  Verifica problemas de formatação com **Prettier**.
+
+  ```bash
+  npm run lint:prettier:check
+  ```
+
+- **`npm run lint:prettier:fix`**
+
+  Corrige problemas de formatação automaticamente.
+
+  ```bash
+  npm run lint:prettier:fix
+  ```
+
+### Criação de Templates
+
+- **`npm run create-template`**
+
+  Script utilitário para criar templates React personalizados.
+
+  ```bash
+  npm run create-template
+  ```
+
+  Criando módulos.
+
+  ```bash
+  npm run create-template -- --module <ModulePage> <ModuleName>
+  ```
+
+  Criando componentes.
+
+  ```bash
+  npm run create-template -- --component --<general | form | field | modal> <ComponentName>
+  ```
+
+## Integração com GitHub Actions
+
+Este projeto utiliza **GitHub Workflows** para:
+
+- Executar testes automatizados.
+- Verificar a qualidade do código com **Prettier**.
+
+Os workflows são executados automaticamente em cada push ou pull request, garantindo que o código esteja sempre em conformidade com os padrões estabelecidos.
+
+## Tecnologias Utilizadas
+
+- **React**
+- **TypeScript**
+- **Vite**
+- **Vitest**
+- **SASS**
+- **Zod**
+- **Framer Motion**
+- **React Toastify**
+- **React Router DOM**
+
+## Autor
+
+Desenvolvido por **Gutemberg Lamark**.

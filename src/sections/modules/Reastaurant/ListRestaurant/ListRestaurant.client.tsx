@@ -2,7 +2,7 @@ import Product from "@/@core/domain/entities/product/Product";
 import { IProduct } from "@/@core/domain/entities/product/Product.types";
 import ListProducts from "@/@core/domain/usecases/listProducts/listProducts.usecase";
 import { restaurantGateway } from "@/@core/infra/gateways/restaurant/RestaurantHttp.gateway";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ListOfProductsProps } from "./ListRestaurant.types";
 import { Card } from "@/components/general";
 
@@ -11,27 +11,29 @@ export default function ListOfProducts({ id }: ListOfProductsProps) {
 
   const listProducts = new ListProducts(restaurantGateway);
 
+  const formatAndSetProducts = useCallback(async () => {
+    const data = await listProducts.execute(id);
+
+    const formatedProducts = data.products.map((product: IProduct) => {
+      const newProduct = new Product(
+        product.id,
+        product.name,
+        product.description,
+        product.value,
+        product.canceled_at,
+        product.createdAt,
+        product.updatedAt,
+        product.restaurant_id,
+      );
+
+      return newProduct;
+    });
+
+    setProducts(formatedProducts.map((product: Product) => product.toJSON()));
+  }, []);
+
   useEffect(() => {
-    (async () => {
-      const data = await listProducts.execute(id);
-
-      const formatedProducts = data.products.map((product: IProduct) => {
-        const newProduct = new Product(
-          product.id,
-          product.name,
-          product.description,
-          product.value,
-          product.canceled_at,
-          product.createdAt,
-          product.updatedAt,
-          product.restaurant_id,
-        );
-
-        return newProduct;
-      });
-
-      setProducts(formatedProducts.map((product: Product) => product.toJSON()));
-    })();
+    formatAndSetProducts();
   }, []);
 
   return (
