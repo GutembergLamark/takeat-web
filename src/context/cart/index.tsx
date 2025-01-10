@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { CartContext } from "./cart.context";
 import { ICartProvider, ProductCart } from "./cart.types";
 import CreateOrder from "@/@core/domain/usecases/createOrder/createOrder.usecase";
@@ -17,15 +17,9 @@ export function CartProvider({ children }: ICartProvider) {
     boolean | null
   >(null);
 
-  const createOrder = new CreateOrder(restaurantGateway);
-
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
-    loadCart(cartProducts);
-  }, [cartProducts]);
-
-  function loadCart(cartProducts: Array<ProductCart>) {
+  const loadCart = useCallback((cartProducts: Array<ProductCart>) => {
     const localCart = localStorage.getItem("takeat_cart");
     const parsedCart = localCart ? JSON.parse(localCart) : null;
 
@@ -38,7 +32,7 @@ export function CartProvider({ children }: ICartProvider) {
     if (hasCartInLocalStorage && !cartProducts?.length) {
       setCartProducts(parsedCart);
     }
-  }
+  }, []);
 
   function localStorageSet<T>(name: string, data: T) {
     try {
@@ -48,7 +42,7 @@ export function CartProvider({ children }: ICartProvider) {
     }
   }
 
-  async function setRestaurantHasTax(id: string) {
+  const setRestaurantHasTax = useCallback(async (id: string) => {
     const getRestaurant = new GetRestaurant(restaurantGateway);
 
     const data = await getRestaurant.execute(id);
@@ -62,7 +56,7 @@ export function CartProvider({ children }: ICartProvider) {
     }
 
     return data;
-  }
+  }, []);
 
   function getRestaurantHasTax(): boolean {
     const localTax = localStorage.getItem("takeat_restaurant_tax");
@@ -80,7 +74,7 @@ export function CartProvider({ children }: ICartProvider) {
     localStorageSet<string>("takeat_restaurant_page", uri);
   }
 
-  function getRestaurantForCart() {
+  const getRestaurantForCart = useCallback(() => {
     const localPage = localStorage.getItem("takeat_restaurant_page");
     const parsedPage = localPage ? JSON.parse(localPage) : null;
 
@@ -97,7 +91,7 @@ export function CartProvider({ children }: ICartProvider) {
     }
 
     return parsedPage || restaurantPage;
-  }
+  }, [restaurantPage, setRestaurantPage]);
 
   function addProduct(item: ProductCart) {
     if (cartProducts.length === 0) {
@@ -134,23 +128,31 @@ export function CartProvider({ children }: ICartProvider) {
     return cartProducts;
   }
 
-  async function buyCart(values: DataCreateOrder) {
-    const data = await createOrder.execute(values);
+  const buyCart = useCallback(
+    async (values: DataCreateOrder) => {
+      const createOrder = new CreateOrder(restaurantGateway);
+      const data = await createOrder.execute(values);
 
-    if (data?.errors) {
-      return setErrorsCart(data?.errors);
-    }
+      if (data?.errors) {
+        return setErrorsCart(data?.errors);
+      }
 
-    if (data?.data?.id) {
-      setCartProducts([]);
+      if (data?.data?.id) {
+        setCartProducts([]);
+        setErrorsCart({});
+        localStorageSet<Array<ProductCart>>("takeat_cart", []);
+        return navigate(`/restaurant/${values?.restaurant_id}`);
+      }
+
       setErrorsCart({});
-      localStorageSet<Array<ProductCart>>("takeat_cart", []);
-      return navigate(`/restaurant/${values?.restaurant_id}`);
-    }
+      return data;
+    },
+    [navigate, setErrorsCart, setCartProducts],
+  );
 
-    setErrorsCart({});
-    return data;
-  }
+  useLayoutEffect(() => {
+    loadCart(cartProducts);
+  }, [cartProducts, loadCart]);
 
   return (
     <CartContext.Provider

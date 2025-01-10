@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { RestaurantContext } from "./restaurant.context";
 import { IRestaurant, IRestaurantProvider } from "./restaurant.types";
 import CreateSession from "@/@core/domain/usecases/createSession/createSession.usecase";
@@ -32,94 +32,115 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
 
   const navigate = useNavigate();
 
-  const createSession = new CreateSession(restaurantGateway);
-  const createRetaurant = new CreateRestaurant(restaurantGateway);
+  const createSession = useMemo(() => new CreateSession(restaurantGateway), []);
+  const createRetaurant = useMemo(
+    () => new CreateRestaurant(restaurantGateway),
+    [],
+  );
 
-  useLayoutEffect(() => {
-    loadRestaurant(restaurant);
-  }, [restaurant]);
+  const loadRestaurant = useCallback(
+    (restaurant: Partial<IRestaurant> | null) => {
+      setLoading(true);
+      const localRestaurant = localStorage.getItem("takeat_restaurant");
+      const parsedRestaurant = localRestaurant
+        ? JSON.parse(localRestaurant)
+        : null;
 
-  function loadRestaurant(restaurant: Partial<IRestaurant> | null) {
-    setLoading(true);
-    const localRestaurant = localStorage.getItem("takeat_restaurant");
-    const parsedRestaurant = localRestaurant
-      ? JSON.parse(localRestaurant)
-      : null;
+      const hasRestaurantInLocalStorage =
+        localRestaurant && parsedRestaurant?.id;
 
-    const hasRestaurantInLocalStorage = localRestaurant && parsedRestaurant?.id;
-
-    if (restaurant && !hasRestaurantInLocalStorage) {
-      try {
-        localStorage.setItem("takeat_restaurant", JSON.stringify(restaurant));
-      } catch (error) {
-        console.error("Erro ao salvar no localStorage", error);
+      if (restaurant && !hasRestaurantInLocalStorage) {
+        try {
+          localStorage.setItem("takeat_restaurant", JSON.stringify(restaurant));
+        } catch (error) {
+          console.error("Erro ao salvar no localStorage", error);
+        }
       }
-    }
 
-    if (hasRestaurantInLocalStorage && !restaurant?.id) {
-      setRestaurant(parsedRestaurant);
-    }
+      if (hasRestaurantInLocalStorage && !restaurant?.id) {
+        setRestaurant(parsedRestaurant);
+      }
 
-    setLoading(false);
-  }
+      setLoading(false);
+    },
+    [],
+  );
 
-  async function login(values: Credentials) {
-    const data = await createSession.execute(values);
+  const login = useCallback(
+    async (values: Credentials) => {
+      const data = await createSession.execute(values);
 
-    if (data?.errors) {
-      return setErrorsLogin(data?.errors);
-    }
+      if (data?.errors) {
+        return setErrorsLogin(data?.errors);
+      }
 
-    if (data?.restaurant?.authorization) {
-      delete data?.restaurant?.authorization;
+      if (data?.restaurant?.authorization) {
+        delete data?.restaurant?.authorization;
 
-      setRestaurant(data?.restaurant);
+        setRestaurant(data?.restaurant);
+        setErrorsLogin({});
+        return navigate(`/restaurant/${data?.restaurant?.id}/dashboard`);
+      }
+
       setErrorsLogin({});
-      return navigate(`/restaurant/${data?.restaurant?.id}/dashboard`);
-    }
+      return data;
+    },
+    [createSession, navigate, setErrorsLogin, setRestaurant],
+  );
 
-    setErrorsLogin({});
-    return data;
-  }
-
-  function logout() {
+  const logout = () => {
     localStorage.removeItem("takeat_restaurant");
     removeCookie("takeat_authorization");
     setRestaurant(null);
     return navigate("/");
-  }
+  };
 
-  async function register(values: DataCreateRestaurant) {
-    const data = await createRetaurant.execute(values);
+  const register = useCallback(
+    async (values: DataCreateRestaurant) => {
+      const data = await createRetaurant.execute(values);
 
-    if (data?.errors) {
-      return setErrorsRegister(data?.errors);
-    }
-
-    if (data?.data?.id) {
-      const dataSession = await createSession?.execute({
-        email: values?.email,
-        password: values?.password,
-      });
-
-      if (dataSession?.restaurant?.authorization) {
-        setRestaurant(dataSession?.restaurant);
-        setErrorsRegister({});
-        return navigate(`/restaurant/${dataSession?.restaurant?.id}/dashboard`);
+      if (data?.errors) {
+        return setErrorsRegister(data?.errors);
       }
-    }
 
-    setErrorsRegister({});
-    return data;
-  }
+      if (data?.data?.id) {
+        const dataSession = await createSession?.execute({
+          email: values?.email,
+          password: values?.password,
+        });
 
-  async function getOrders() {
+        if (dataSession?.restaurant?.authorization) {
+          setRestaurant(dataSession?.restaurant);
+          setErrorsRegister({});
+          return navigate(
+            `/restaurant/${dataSession?.restaurant?.id}/dashboard`,
+          );
+        }
+      }
+
+      setErrorsRegister({});
+      return data;
+    },
+    [
+      createRetaurant,
+      createSession,
+      navigate,
+      setErrorsRegister,
+      setRestaurant,
+    ],
+  );
+
+  const getOrders = useCallback(async () => {
     const authorization = getCookie("takeat_authorization");
 
     const listOrders = new ListOrders(restaurantGateway);
 
     return await listOrders?.execute(authorization);
-  }
+  }, []);
+
+  useLayoutEffect(() => {
+    loadRestaurant(restaurant);
+  }, [restaurant, loadRestaurant]);
 
   return (
     <RestaurantContext.Provider
