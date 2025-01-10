@@ -1,0 +1,7 @@
+main.register {
+  height: 100dvh;
+
+  & section {
+    height: inherit;
+  }
+}

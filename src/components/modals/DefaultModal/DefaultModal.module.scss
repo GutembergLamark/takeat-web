@@ -1,0 +1,64 @@
+@use "@/assets/sass/abstracts/variables" as *;
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #00000042;
+  border: none;
+
+  &__wrapper {
+    background-color: $white;
+    position: relative;
+    border-radius: 2rem;
+    border: 2px solid $red;
+    display: flex;
+    overflow: hidden;
+    overflow: auto;
+    max-height: 100%;
+    max-width: 50rem;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & > button {
+      position: absolute;
+      right: clamp(1.8rem, 5.2cqi, 3.2rem);
+      top: clamp(1.8rem, 4.4cqi, 2.4rem);
+      font-size: 3rem;
+      background-color: $red;
+      color: $white;
+      width: clamp(2.8rem, 3.2vw, 3.2rem);
+      height: clamp(2.8rem, 3.2vw, 3.2rem);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid $white;
+      z-index: 10;
+
+      & span {
+        margin-top: 2px;
+      }
+    }
+
+    & > div {
+      display: flex;
+      flex-flow: column;
+      padding: clamp(5rem, 10cqi, 8rem) clamp(1.8rem, 5.2cqi, 3.2rem)
+        clamp(2.8rem, 6.2cqi, 4.2rem);
+      height: max-content;
+      width: inherit;
+    }
+  }
+}

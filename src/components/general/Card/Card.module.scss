@@ -1,0 +1,124 @@
+@use "@/assets/sass/abstracts/typography" as *;
+@use "@/assets/sass/abstracts/variables" as *;
+
+.card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    & img {
+      transition: all 0.2s ease-in-out;
+      scale: 1.1;
+    }
+  }
+
+  & picture {
+    border-radius: 0.8rem;
+    overflow: hidden;
+    margin-right: clamp(1rem, 1.5cqi, 1.5rem);
+    min-width: clamp(14rem, 30cqi, 19rem);
+
+    & img {
+      min-width: inherit;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: inherit;
+
+    & h3 {
+      @include Poppins1-6rem($weight: 600);
+    }
+
+    & span {
+      @include Poppins1-4rem($weight: 500);
+      margin-left: auto;
+    }
+  }
+
+  @container (max-width: 41rem) {
+    &__content {
+      flex-flow: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      & span {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.card-modal {
+  & picture {
+    border-radius: 0.8rem;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+    margin-bottom: clamp(2.4rem, 2.8cqi, 2.8rem);
+
+    & img {
+      min-width: inherit;
+      object-fit: cover;
+    }
+  }
+
+  & h2 {
+    margin-bottom: clamp(1.6rem, 2cqi, 2rem);
+  }
+
+  & p {
+    @include Poppins1-4rem();
+
+    &:has(span) {
+      display: flex;
+      align-items: center;
+
+      & > span:first-of-type {
+        font-weight: 500;
+      }
+
+      & > span:last-of-type {
+        @include Poppins1-6rem();
+        border: 1px solid $black-opacity-1;
+        border-radius: 0.8rem;
+        color: $red;
+        min-width: 10rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.5rem;
+        margin-left: auto;
+
+        &:not(:has(button + span)) {
+          & span {
+            margin-left: auto;
+            margin-right: 1.25rem;
+          }
+        }
+      }
+
+      & button {
+        font-weight: bold;
+        color: $red;
+        font-size: 2rem;
+      }
+    }
+
+    &:not(:has(span)) {
+      font-weight: 500;
+      color: $gray;
+    }
+  }
+
+  & > button {
+    margin-top: clamp(2.4rem, 2.8cqi, 2.8rem);
+  }
+}

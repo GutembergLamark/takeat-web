@@ -1,0 +1,26 @@
+@use "@/assets/sass/abstracts/variables" as *;
+@use "@/assets/sass/abstracts/typography" as *;
+
+.l-restaurants {
+  container-type: inline-size;
+  padding: clamp(7rem, 9cqi, 9rem) 0;
+
+  & h2 {
+    @include Poppins2-2rem;
+    color: $black-1;
+  }
+
+  &__list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-top: clamp(3rem, 3.8cqi, 3.8rem);
+
+    & > * {
+      flex: 1;
+      align-self: stretch;
+    }
+  }
+}

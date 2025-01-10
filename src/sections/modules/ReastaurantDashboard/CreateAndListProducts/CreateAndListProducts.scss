@@ -1,0 +1,31 @@
+@use "@/assets/sass/abstracts/typography" as *;
+
+.cl-products {
+  container-type: inline-size;
+  padding: clamp(7rem, 9cqi, 9rem) 0;
+
+  & > button {
+    margin: 0 auto;
+  }
+
+  &__empty {
+    display: flex;
+    flex-flow: column;
+    gap: clamp(1.6rem, 2cqi, 2rem);
+    justify-content: center;
+    align-items: center;
+    margin-top: clamp(10rem, 25cqi, 15rem);
+
+    & p {
+      @include Poppins1-6rem();
+      align-items: center;
+    }
+  }
+
+  &__products {
+    display: flex;
+    flex-flow: column;
+    gap: clamp(1.8rem, 2.4cqi, 2.4rem);
+    margin-top: clamp(3rem, 3.8cqi, 3.8rem);
+  }
+}

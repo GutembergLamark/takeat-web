@@ -1,0 +1,68 @@
+@use "@/assets/sass/abstracts/variables" as *;
+@use "@/assets/sass/abstracts/typography" as *;
+
+.header {
+  container-type: inline-size;
+  padding: clamp(1.5rem, 2vw, 2rem) 0;
+  background-color: $white;
+  box-shadow: $shadow;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    & img {
+      width: clamp(12rem, 18.8cqi, 18.8rem);
+    }
+  }
+
+  &__name {
+    @include Poppins1-6rem;
+    display: flex;
+    flex-flow: column;
+
+    & a,
+    & button {
+      font-weight: 600;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+
+    & button:hover {
+      color: $red;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  &__cart {
+    margin-left: auto;
+    margin-right: 1.5rem;
+    position: relative;
+
+    & span {
+      font-size: 1rem;
+      font-weight: 700;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background-color: $black;
+      color: $white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 74%;
+      right: 0;
+    }
+  }
+}

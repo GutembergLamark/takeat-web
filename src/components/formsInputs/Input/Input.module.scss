@@ -1,0 +1,82 @@
+@use "@/assets/sass/abstracts/typography" as *;
+@use "@/assets/sass/abstracts/variables" as *;
+
+.field {
+  border: none;
+  position: relative;
+  width: 100%;
+
+  & label {
+    @include Poppins1-6rem;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  & input {
+    border: 1px solid $black-opacity-1;
+    padding: 1rem;
+    padding-right: 3rem;
+    border-radius: 0.8rem;
+    height: 4rem;
+    width: 100%;
+
+    &,
+    &::placeholder {
+      @include Poppins1-4rem;
+    }
+
+    &[type="checkbox"] {
+      overflow: hidden;
+      padding: 0;
+      width: 2rem;
+      min-width: 2rem;
+      height: 2rem;
+      float: left;
+      position: relative;
+      cursor: pointer;
+
+      &:checked {
+        background-color: rgba($white, 0.4);
+      }
+
+      &:checked::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0.9rem;
+        height: 0.8rem;
+        background-image: url("../../../assets/svg/check.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: invert(1);
+      }
+    }
+  }
+
+  &__eye {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1rem;
+  }
+
+  &__error {
+    @include Poppins1-2rem;
+    position: absolute;
+    top: calc(100%);
+    left: 0;
+    color: $red;
+  }
+
+  &:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    & label {
+      margin: 0;
+      cursor: pointer;
+    }
+  }
+}
