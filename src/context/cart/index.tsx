@@ -56,7 +56,7 @@ export function CartProvider({ children }: ICartProvider) {
     if (data?.restaurant) {
       localStorageSet<string>(
         "takeat_restaurant_tax",
-        data?.restaurant?.has_service_tax
+        data?.restaurant?.has_service_tax,
       );
       setRestaurantServiceTax(data?.restaurant?.has_service_tax);
     }
@@ -114,7 +114,7 @@ export function CartProvider({ children }: ICartProvider) {
 
   function removeProduct(item: ProductCart) {
     const cartRemovedItem = cartProducts.filter(
-      (product) => product.id !== item.id
+      (product) => product.id !== item.id,
     );
 
     setCartProducts(cartRemovedItem);
@@ -125,7 +125,7 @@ export function CartProvider({ children }: ICartProvider) {
 
   function updateAmountProduct(item: ProductCart) {
     const cartUpdated = cartProducts.map((product) =>
-      product.id === item.id ? { ...product, amount: item.amount } : product
+      product.id === item.id ? { ...product, amount: item.amount } : product,
     );
 
     setCartProducts(cartUpdated);

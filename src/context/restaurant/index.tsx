@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLayoutEffect, useState } from "react";
 import { RestaurantContext } from "./restaurant.context";
@@ -15,16 +14,16 @@ import { removeCookie } from "@/utils/functions";
 
 export function RestaurantProvider({ children }: IRestaurantProvider) {
   const localStorageRestaurant = JSON.parse(
-    (localStorage.getItem("takeat_restaurant") as string) ?? null
+    (localStorage.getItem("takeat_restaurant") as string) ?? null,
   );
 
   const [restaurant, setRestaurant] = useState<Partial<IRestaurant> | null>(
-    (localStorageRestaurant ?? null) as IRestaurant | null
+    (localStorageRestaurant ?? null) as IRestaurant | null,
   );
   const [loading, setLoading] = useState<boolean>(false);
 
   const [errorsLogin, setErrorsLogin] = useState<Partial<Credentials>>(
-    {} as Partial<Credentials>
+    {} as Partial<Credentials>,
   );
   const [errorsRegister, setErrorsRegister] = useState<
     Partial<Omit<DataCreateRestaurant, "has_service_tax">>
@@ -40,6 +39,7 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
   }, [restaurant]);
 
   function loadRestaurant(restaurant: Partial<IRestaurant> | null) {
+    setLoading(true);
     const localRestaurant = localStorage.getItem("takeat_restaurant");
     const parsedRestaurant = localRestaurant
       ? JSON.parse(localRestaurant)
@@ -58,6 +58,8 @@ export function RestaurantProvider({ children }: IRestaurantProvider) {
     if (hasRestaurantInLocalStorage && !restaurant?.id) {
       setRestaurant(parsedRestaurant);
     }
+
+    setLoading(false);
   }
 
   async function login(values: Credentials) {
